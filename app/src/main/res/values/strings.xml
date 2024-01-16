@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Scent</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forgot Password?</string>
+    <string name="do_not_have_any_account">Don\'t have an account? <font color="#FF48A7F8">Register</font></string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="already_have_accounts">Already have an account? <font color="#FF48A7F8">Login</font></string>
+    <string name="confirm_password">Confirm Password</string>
+</resources>
