@@ -78,4 +78,7 @@ dependencies {
     //custom ui
     implementation("com.github.Musfick:Snackify:0.1.2")
 
+    //navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 }

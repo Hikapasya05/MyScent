@@ -1,11 +1,13 @@
 package com.hika.myscent.features.auth.login
 
+import android.content.Intent
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.hika.myscent.R
 import com.hika.myscent.base.BaseFragment
 import com.hika.myscent.databinding.FragmentLoginBinding
+import com.hika.myscent.features.MainActivity
 import com.hika.myscent.features.auth.register.RegisterFragment
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,7 +43,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 state?.let {
                     if (it.isLoading) loadingDialog.show() else loadingDialog.hide()
                     if (it.isSuccess) {
-                        showSuccessSnackBar("Login success")
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(intent)
+                        requireActivity().finish()
                     }
                     if (it.isError) {
                         showErrorSnackBar(it.errorMessage)

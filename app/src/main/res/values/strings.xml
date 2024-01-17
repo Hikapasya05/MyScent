@@ -11,4 +11,8 @@
     <string name="address">Address</string>
     <string name="already_have_accounts">Already have an account? <font color="#FF48A7F8">Login</font></string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
 </resources>
