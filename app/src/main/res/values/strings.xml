@@ -15,4 +15,7 @@
     <string name="cart">Cart</string>
     <string name="favorite">Favorite</string>
     <string name="profile">Profile</string>
+    <string name="men">Men</string>
+    <string name="women">Women</string>
+    <string name="unisex">Unisex</string>
 </resources>
