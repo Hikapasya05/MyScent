@@ -2,7 +2,7 @@ package com.hika.myscent.features.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hika.myscent.data.repository.AuthRepository
+import com.hika.myscent.data.repository.auth.AuthRepository
 import com.hika.myscent.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:paddingVertical="32dp"
     tools:context=".features.home.HomeFragment">
 
     <LinearLayout
@@ -14,35 +14,41 @@
         <SearchView
             android:id="@+id/sv_perfume"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_promotion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="24dp"/>
 
         <TextView
             android:id="@+id/tv_men"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/men"
             android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_men"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="24dp"
+            android:clipToPadding="false"/>
 
         <TextView
             android:id="@+id/tv_women"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="24dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/women"
             android:textSize="18sp"
@@ -52,13 +58,16 @@
             android:id="@+id/rv_women"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="24dp"
+            android:clipToPadding="false"/>
 
         <TextView
             android:id="@+id/tv_unisex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="24dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/unisex"
             android:textSize="18sp"
@@ -68,7 +77,9 @@
             android:id="@+id/rv_unisex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="24dp"
+            android:clipToPadding="false"/>
 
     </LinearLayout>
 

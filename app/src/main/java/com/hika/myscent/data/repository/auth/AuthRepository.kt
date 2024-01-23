@@ -1,4 +1,4 @@
-package com.hika.myscent.data.repository
+package com.hika.myscent.data.repository.auth
 
 import com.hika.myscent.model.User
 

@@ -1,32 +1,64 @@
 package com.hika.myscent.features.home
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.hika.myscent.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.myscent.adapter.PerfumeAdapter
+import com.hika.myscent.base.BaseFragment
+import com.hika.myscent.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
+    private val viewModel by viewModel<HomeViewModel>()
+
+    private val womenCategoryAdapter by lazy { PerfumeAdapter() }
+    private val menCategoryAdapter by lazy { PerfumeAdapter() }
+    private val unisexCategoryAdapter by lazy { PerfumeAdapter() }
+
+    override fun inflateViewBinding(container: ViewGroup?): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(layoutInflater, container, false)
     }
 
-    private lateinit var viewModel: HomeViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun determineScreenOrientation(): ScreenOrientation {
+        return ScreenOrientation.PORTRAIT
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+    override fun FragmentHomeBinding.bind() {
 
+        viewModel.getPerfumes()
+
+        rvMen.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = menCategoryAdapter
+        }
+
+        rvWomen.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = womenCategoryAdapter
+        }
+
+        rvUnisex.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = unisexCategoryAdapter
+        }
+
+        lifecycleScope.launch {
+            viewModel.homeState.collect {
+                if (it.isLoading) loadingDialog.show() else loadingDialog.dismiss()
+                if (it.isSuccess) {
+                    val men = it.successData?.get("Men").orEmpty()
+                    val women = it.successData?.get("Women").orEmpty()
+                    val unisex = it.successData?.get("Unisex").orEmpty()
+
+                    menCategoryAdapter.submitList(men)
+                    womenCategoryAdapter.submitList(women)
+                    unisexCategoryAdapter.submitList(unisex)
+                }
+                if (it.isError) showErrorSnackBar(it.errorMessage)
+            }
+        }
+    }
 }
