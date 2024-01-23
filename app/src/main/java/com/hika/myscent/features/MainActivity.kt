@@ -1,12 +1,22 @@
 package com.hika.myscent.features
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.hika.myscent.R
+import com.hika.myscent.base.BaseActivity
+import com.hika.myscent.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+    override fun inflateViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    override fun determineScreenOrientation(): ScreenOrientation {
+        return ScreenOrientation.PORTRAIT
+    }
+
+    override fun ActivityMainBinding.bind() {
+        val navController = findNavController(R.id.main_navigation)
+        binding.mainBottomNav.setupWithNavController(navController)
     }
 }

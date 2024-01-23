@@ -1,4 +1,4 @@
-package com.hika.myscent.data.repository
+package com.hika.myscent.data.repository.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

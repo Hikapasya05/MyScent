@@ -57,12 +57,11 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.fragmentView = view
+        this.loadingDialog = requireContext().buildLoadingDialog()
 
         binding?.apply {
             bind()
         }
-
-        loadingDialog = requireContext().buildLoadingDialog()
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
