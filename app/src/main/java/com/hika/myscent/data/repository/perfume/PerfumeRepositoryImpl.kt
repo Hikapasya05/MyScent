@@ -4,8 +4,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.getField
 import com.hika.myscent.data.util.FirestoreCollection.PERFUMES
 import com.hika.myscent.data.util.FirestoreCollection.REVIEWS
+import com.hika.myscent.data.util.FirestoreCollection.USERS
 import com.hika.myscent.data.util.FirestoreField.RATING
 import com.hika.myscent.data.util.toPerfume
+import com.hika.myscent.data.util.toReview
 import com.hika.myscent.model.Perfume
 import kotlinx.coroutines.tasks.await
 
@@ -31,6 +33,38 @@ class PerfumeRepositoryImpl(
 
             Result.success(mappedPerfumes)
 
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getPerfumeDetail(id: String): Result<Perfume> {
+        return try {
+            val perfume = firestore.collection(PERFUMES)
+                .document(id)
+                .get().await()
+                .let { perfumeSnapshot ->
+
+                    val reviews = perfumeSnapshot.reference.collection(REVIEWS)
+                        .get().await().documents.map { reviewSnapshot ->
+
+                            val username = firestore.collection(USERS)
+                                .document(reviewSnapshot.getString("uid").orEmpty())
+                                .get().await().let { it.getString("username").orEmpty() }
+
+                            reviewSnapshot.toReview(username)
+                        }
+
+                    val averageRating = reviews.map { it.rating }.average()
+
+                    perfumeSnapshot.toPerfume(
+                        if (averageRating.isNaN()) 0.0
+                        else averageRating
+                    )
+                }
+
+            Result.success(perfume)
         } catch (e: Exception) {
             e.printStackTrace()
             Result.failure(e)

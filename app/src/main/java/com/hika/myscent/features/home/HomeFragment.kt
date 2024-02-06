@@ -1,12 +1,15 @@
 package com.hika.myscent.features.home
 
+import android.content.Intent
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hika.myscent.adapter.PerfumeAdapter
 import com.hika.myscent.base.BaseFragment
 import com.hika.myscent.databinding.FragmentHomeBinding
-import kotlinx.coroutines.flow.collect
+import com.hika.myscent.features.product.ProductActivity
+import com.hika.myscent.model.Perfume
+import com.hika.myscent.util.IntentKeys
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -14,9 +17,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel by viewModel<HomeViewModel>()
 
-    private val womenCategoryAdapter by lazy { PerfumeAdapter() }
-    private val menCategoryAdapter by lazy { PerfumeAdapter() }
-    private val unisexCategoryAdapter by lazy { PerfumeAdapter() }
+    private val womenCategoryAdapter by lazy { PerfumeAdapter { onItemPressed(it) } }
+    private val menCategoryAdapter by lazy { PerfumeAdapter { onItemPressed(it) } }
+    private val unisexCategoryAdapter by lazy { PerfumeAdapter { onItemPressed(it) } }
 
     override fun inflateViewBinding(container: ViewGroup?): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -60,5 +63,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 if (it.isError) showErrorSnackBar(it.errorMessage)
             }
         }
+    }
+
+    private fun onItemPressed(perfume: Perfume) {
+        val intent = Intent(requireContext(), ProductActivity::class.java)
+        intent.putExtra(IntentKeys.PERFUME_ID, perfume.id)
+        startActivity(intent)
     }
 }

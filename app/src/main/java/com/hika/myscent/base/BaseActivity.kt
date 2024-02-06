@@ -1,12 +1,16 @@
 package com.hika.myscent.base
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.hika.myscent.widget.buildLoadingDialog
+import com.musfickjamil.snackify.Snackify
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
 
+    lateinit var loadingDialog: Dialog
 
     private lateinit var _binding: VB
     val binding get() = _binding
@@ -20,6 +24,7 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         _binding = inflateViewBinding()
         setContentView(binding.root)
 
+        this.loadingDialog = buildLoadingDialog()
         val screenOrientation = determineScreenOrientation()
 
         requestedOrientation = if(screenOrientation != null) {
@@ -34,6 +39,14 @@ abstract class BaseActivity<VB: ViewBinding>: AppCompatActivity() {
         binding.apply {
             bind()
         }
+    }
+
+    fun showSuccessSnackBar(message: String) {
+        Snackify.success(binding.root, message, Snackify.LENGTH_SHORT).show()
+    }
+
+    fun showErrorSnackBar(message: String) {
+        Snackify.error(binding.root, message, Snackify.LENGTH_SHORT).show()
     }
 
 

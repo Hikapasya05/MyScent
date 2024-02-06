@@ -6,7 +6,7 @@ data class Perfume(
     val image: String = "",
     val category: String = "",
     val description: String = "",
-    val strong: Int = 0,
+    val strength: Int = 0,
     val price: Int = 0,
     val rating: Double = 0.0
 )
