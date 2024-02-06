@@ -9,7 +9,9 @@ import com.hika.myscent.common.toRupiahFormat
 import com.hika.myscent.databinding.ItemPerfumeBinding
 import com.hika.myscent.model.Perfume
 
-class PerfumeAdapter: BaseRecyclerViewAdapter<ItemPerfumeBinding, Perfume>() {
+class PerfumeAdapter(
+    private val onItemPressed: (Perfume) -> Unit = {}
+): BaseRecyclerViewAdapter<ItemPerfumeBinding, Perfume>() {
     override fun inflateViewBinding(parent: ViewGroup): ItemPerfumeBinding {
         return ItemPerfumeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     }
@@ -25,5 +27,9 @@ class PerfumeAdapter: BaseRecyclerViewAdapter<ItemPerfumeBinding, Perfume>() {
         Glide.with(itemView.context)
             .load(data.image)
             .into(ivPerfume)
+
+        itemView.setOnClickListener {
+            onItemPressed(data)
+        }
     }
 }

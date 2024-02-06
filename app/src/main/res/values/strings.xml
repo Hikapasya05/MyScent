@@ -18,4 +18,14 @@
     <string name="men">Men</string>
     <string name="women">Women</string>
     <string name="unisex">Unisex</string>
+    <string name="description">Description</string>
+    <string name="review">Review</string>
+    <string name="price">Price</string>
+    <string name="add_to_cart">Add To Cart</string>
+
+    <string name="indicator_weak">(Weak)</string>
+    <string name="indicator_intimate">(Intimate)</string>
+    <string name="indicator_moderate">(Moderate)</string>
+    <string name="indicator_strong">(Strong)</string>
+    <string name="indicator_very_strong">(Very Strong)</string>
 </resources>
