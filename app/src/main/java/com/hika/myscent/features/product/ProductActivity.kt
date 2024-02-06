@@ -4,6 +4,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.hika.myscent.R
 import com.hika.myscent.base.BaseActivity
+import com.hika.myscent.common.toRupiahFormat
 import com.hika.myscent.databinding.ActivityProductBinding
 import com.hika.myscent.util.IntentKeys
 import kotlinx.coroutines.launch
@@ -41,7 +42,7 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
                     tvDescription.text = perfume?.description
 
                     strengthIndicator (perfume?.strength ?: 0)
-                    includeProductBottomBar.tvPrice.text = (perfume?.price ?: 0).toString()
+                    includeProductBottomBar.tvPrice.text = (perfume?.price ?: 0).toRupiahFormat()
                 }
                 if (state.isError) showErrorSnackBar(state.errorMessage)
             }
