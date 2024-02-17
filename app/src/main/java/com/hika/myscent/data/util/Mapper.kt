@@ -24,7 +24,7 @@ fun DocumentSnapshot.toReview(
 ) = Review(
     id,
     username,
-    getField<Int>("rating")?.toDouble() ?: 0.0,
+    getField<Int>("rating") ?: 0,
     getString("review").orEmpty(),
     getTimestamp("date") ?: Timestamp.now()
 )
