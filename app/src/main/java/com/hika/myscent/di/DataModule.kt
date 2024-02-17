@@ -7,6 +7,8 @@ import com.hika.myscent.data.repository.auth.AuthRepository
 import com.hika.myscent.data.repository.auth.AuthRepositoryImpl
 import com.hika.myscent.data.repository.perfume.PerfumeRepository
 import com.hika.myscent.data.repository.perfume.PerfumeRepositoryImpl
+import com.hika.myscent.data.repository.review.ReviewRepository
+import com.hika.myscent.data.repository.review.ReviewRepositoryImpl
 import org.koin.dsl.module
 
 val firebaseModule = module {
@@ -17,4 +19,5 @@ val firebaseModule = module {
 val repositoryModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
     single<PerfumeRepository> { PerfumeRepositoryImpl(get()) }
+    single<ReviewRepository> { ReviewRepositoryImpl(get(), get()) }
 }
