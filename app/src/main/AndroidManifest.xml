@@ -16,11 +16,17 @@
         android:theme="@style/Theme.MyScent"
         tools:targetApi="31">
         <activity
+            android:name=".features.payment.PaymentVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.product.ProductActivity"
             android:exported="false" />
         <activity
             android:name=".features.auth.AuthActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".features.splash.SplashActivity"
             android:exported="true">
@@ -32,7 +38,7 @@
         </activity>
         <activity
             android:name=".features.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

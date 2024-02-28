@@ -1,32 +1,71 @@
 package com.hika.myscent.features.cart
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
+import android.content.Intent
 import android.view.ViewGroup
-import com.hika.myscent.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.myscent.adapter.CartAdapter
+import com.hika.myscent.base.BaseFragment
+import com.hika.myscent.databinding.FragmentCartBinding
+import com.hika.myscent.features.payment.PaymentActivity
+import com.hika.myscent.util.IntentKeys
+import com.hika.myscent.widget.CartSnackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CartFragment : Fragment() {
+class CartFragment : BaseFragment<FragmentCartBinding>() {
 
-    companion object {
-        fun newInstance() = CartFragment()
+    private val viewModel by viewModel<CartViewModel>()
+
+    override fun inflateViewBinding(container: ViewGroup?): FragmentCartBinding {
+        return FragmentCartBinding.inflate(layoutInflater, container, false)
     }
 
-    private lateinit var viewModel: CartViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+    override fun determineScreenOrientation(): ScreenOrientation {
+        return ScreenOrientation.PORTRAIT
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun FragmentCartBinding.bind() {
+        viewModel.getCarts()
+
+        val cartSnackbar = CartSnackbar.make(
+            llCart,
+            onSnackbarPressed = {
+                val intent = Intent(requireContext(), PaymentActivity::class.java)
+                intent.putParcelableArrayListExtra(
+                    IntentKeys.CHECKED_OUT_CARTS,
+                    viewModel.carts.value?.filter { it.second }?.map { it.first }?.toList()
+                        ?.let { ArrayList(it) }
+                )
+                startActivity(intent)
+            }
+        )
+
+        val cartAdapter = CartAdapter(
+            onIncreaseAmount = { productId, name, price, image -> viewModel.addItem(productId, name, price, image) },
+            onDecreaseAmount = { viewModel.removeItem(it) },
+            onDeleteItem = { viewModel.deleteCart(it) },
+            onCheckedChange = { productId, isChecked -> viewModel.onCheckedChange(productId, isChecked) }
+        )
+
+        rvCart.apply {
+            adapter = cartAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+        cbSelectAll.setOnCheckedChangeListener { _, isChecked -> viewModel.onSelectAll(isChecked) }
+
+        viewModel.carts.observe(viewLifecycleOwner) {
+            cartAdapter.submitList(it)
+
+            val atLeastHaveOneChecked = it.any { it.second }
+            if (atLeastHaveOneChecked) {
+                val totalPrice = it.filter { it.second }.sumOf { it.first.price * it.first.amount }
+                cartSnackbar.setPrice(totalPrice)
+                cartSnackbar.itemsCount(it.filter { it.second}.sumOf { it.first.amount })
+                cartSnackbar.show()
+            } else {
+                cartSnackbar.dismiss()
+            }
+        }
     }
 
 }
