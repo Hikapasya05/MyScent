@@ -2,8 +2,10 @@ package com.hika.myscent.features.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hika.myscent.data.repository.cart.CartRepository
 import com.hika.myscent.data.repository.perfume.PerfumeRepository
 import com.hika.myscent.data.repository.review.ReviewRepository
+import com.hika.myscent.model.Cart
 import com.hika.myscent.model.Review
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +14,7 @@ import kotlinx.coroutines.launch
 class ProductViewModel(
     private val perfumeRepository: PerfumeRepository,
     private val reviewRepository: ReviewRepository,
+    private val cartRepository: CartRepository,
 ): ViewModel() {
 
     private val _productState = MutableStateFlow(ProductState())
@@ -39,6 +42,14 @@ class ProductViewModel(
             reviewRepository.getReviews(perfumeId).onSuccess {
                 _reviews.value = it
             }
+        }
+    }
+
+    fun addItem(productId: String, name: String, price: Int, image: String) {
+        viewModelScope.launch {
+            cartRepository.addItem(
+                productId, name, price, image
+            )
         }
     }
 

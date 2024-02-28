@@ -9,6 +9,7 @@ import com.hika.myscent.base.BaseActivity
 import com.hika.myscent.common.toRupiahFormat
 import com.hika.myscent.databinding.ActivityProductBinding
 import com.hika.myscent.features.review.ReviewBottomSheetFragment
+import com.hika.myscent.model.Cart
 import com.hika.myscent.util.IntentKeys
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -71,6 +72,15 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
                 viewModel.productState.value.successData?.id.orEmpty()
             )
             reviewSheet.show(supportFragmentManager, reviewSheet.tag)
+        }
+
+        includeProductBottomBar.btnAddCart.setOnClickListener {
+            viewModel.productState.value.successData?.let {
+                viewModel.addItem(
+                    it.id, it.name, it.price, it.image
+                )
+            }
+            showSuccessSnackBar("Item added to cart")
         }
     }
 
