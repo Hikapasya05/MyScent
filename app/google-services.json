@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "191138391821",
+    "project_id": "myscent-dev",
+    "storage_bucket": "myscent-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191138391821:android:8b982069f8a6f31ce7b244",
+        "android_client_info": {
+          "package_name": "com.hika.myscent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrdUafbwwJkYk7cO8f-9Thuk5kThSg8ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191138391821:android:83c29c8172c9042fe7b244",
+        "android_client_info": {
+          "package_name": "com.hika.myscent.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrdUafbwwJkYk7cO8f-9Thuk5kThSg8ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
