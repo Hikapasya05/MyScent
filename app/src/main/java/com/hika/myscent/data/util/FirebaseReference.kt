@@ -5,6 +5,7 @@ object FirestoreCollection {
     const val PERFUMES = "perfumes"
     const val REVIEWS = "reviews"
     const val HISTORIES = "histories"
+    const val FAVORITES = "favorites"
 }
 
 object FirestoreField {

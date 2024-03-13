@@ -11,6 +11,7 @@ import com.hika.myscent.databinding.ActivityProductBinding
 import com.hika.myscent.features.review.ReviewBottomSheetFragment
 import com.hika.myscent.model.Cart
 import com.hika.myscent.util.IntentKeys
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,10 +38,11 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
             layoutManager = LinearLayoutManager(this@ProductActivity, LinearLayoutManager.VERTICAL, false)
         }
 
+        viewModel.isFavorite(perfumeId)
         viewModel.getPerfumeDetail(perfumeId)
         viewModel.getReviews(perfumeId)
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.productState.collect { state ->
                 if (state.isLoading) loadingDialog.show() else loadingDialog.dismiss()
                 if (state.isSuccess) {
@@ -60,9 +62,18 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
             }
         }
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.reviews.collect { reviews ->
                 reviewAdapter.submitList(reviews)
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.isFavorite.collect { isFavorite ->
+                ivFavorite.setImageResource(
+                    if (isFavorite) R.drawable.ic_favorite
+                    else R.drawable.ic_unfavorite
+                )
             }
         }
 
@@ -72,6 +83,10 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
                 viewModel.productState.value.successData?.id.orEmpty()
             )
             reviewSheet.show(supportFragmentManager, reviewSheet.tag)
+        }
+
+        ivFavorite.setOnClickListener {
+            viewModel.onFavoriteIconPressed(perfumeId)
         }
 
         includeProductBottomBar.btnAddCart.setOnClickListener {

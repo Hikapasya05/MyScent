@@ -9,6 +9,8 @@ import com.hika.myscent.data.repository.auth.AuthRepository
 import com.hika.myscent.data.repository.auth.AuthRepositoryImpl
 import com.hika.myscent.data.repository.cart.CartRepository
 import com.hika.myscent.data.repository.cart.CartRepositoryImpl
+import com.hika.myscent.data.repository.favorite.FavoriteRepository
+import com.hika.myscent.data.repository.favorite.FavoriteRepositoryImpl
 import com.hika.myscent.data.repository.history.HistoryRepository
 import com.hika.myscent.data.repository.history.HistoryRepositoryImpl
 import com.hika.myscent.data.repository.perfume.PerfumeRepository
@@ -44,4 +46,5 @@ val repositoryModule = module {
     single<CartRepository> { CartRepositoryImpl(get(), get()) }
     single<UserRepository> { UserRepositoryImpl(get(), get()) }
     single<HistoryRepository> { HistoryRepositoryImpl(get(), get(), get()) }
+    single<FavoriteRepository> { FavoriteRepositoryImpl(get(), get()) }
 }

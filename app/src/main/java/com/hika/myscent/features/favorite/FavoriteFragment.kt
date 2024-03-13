@@ -1,32 +1,54 @@
 package com.hika.myscent.features.favorite
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
+import android.content.Intent
 import android.view.ViewGroup
-import com.hika.myscent.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.myscent.adapter.FavoriteAdapter
+import com.hika.myscent.base.BaseFragment
+import com.hika.myscent.databinding.FragmentFavoriteBinding
+import com.hika.myscent.features.product.ProductActivity
+import com.hika.myscent.util.IntentKeys
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
 
-    companion object {
-        fun newInstance() = FavoriteFragment()
+    private val viewModel by viewModel<FavoriteViewModel>()
+    private val favoriteAdapter by lazy { FavoriteAdapter(
+        onItemPressed = {
+            val intent = Intent(requireContext(), ProductActivity::class.java)
+            intent.putExtra(IntentKeys.PERFUME_ID, it.id)
+            startActivity(intent)
+        },
+        onFavoritePressed = { viewModel.deleteFavorite(it) }
+    ) }
+
+    override fun inflateViewBinding(container: ViewGroup?): FragmentFavoriteBinding {
+        return FragmentFavoriteBinding.inflate(layoutInflater, container, false)
     }
 
-    private lateinit var viewModel: FavoriteViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    override fun determineScreenOrientation(): ScreenOrientation {
+        return ScreenOrientation.PORTRAIT
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun FragmentFavoriteBinding.bind() {
+        viewModel.getFavorite()
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.favoriteState.collect { state ->
+                if (state.isLoading) loadingDialog.show() else loadingDialog.dismiss()
+                if (state.isSuccess) favoriteAdapter.submitList(state.successData)
+                if (state.isError) showErrorSnackBar(state.errorMessage)
+            }
+        }
+
+        rvFavorite.apply {
+            adapter = favoriteAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
     }
+
 
 }

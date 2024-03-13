@@ -3,6 +3,7 @@ package com.hika.myscent.features.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hika.myscent.data.repository.cart.CartRepository
+import com.hika.myscent.data.repository.favorite.FavoriteRepository
 import com.hika.myscent.data.repository.perfume.PerfumeRepository
 import com.hika.myscent.data.repository.review.ReviewRepository
 import com.hika.myscent.model.Cart
@@ -15,6 +16,7 @@ class ProductViewModel(
     private val perfumeRepository: PerfumeRepository,
     private val reviewRepository: ReviewRepository,
     private val cartRepository: CartRepository,
+    private val favoriteRepository: FavoriteRepository
 ): ViewModel() {
 
     private val _productState = MutableStateFlow(ProductState())
@@ -22,6 +24,9 @@ class ProductViewModel(
 
     private val _reviews = MutableStateFlow(emptyList<Review>())
     val reviews = _reviews.asStateFlow()
+
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite = _isFavorite.asStateFlow()
 
     fun getPerfumeDetail(id: String) {
         viewModelScope.launch {
@@ -50,6 +55,29 @@ class ProductViewModel(
             cartRepository.addItem(
                 productId, name, price, image
             )
+        }
+    }
+
+    fun isFavorite(perfumeId: String) {
+        viewModelScope.launch {
+            favoriteRepository.isFavorite(perfumeId).onSuccess {
+                _isFavorite.value = it
+            }
+        }
+    }
+
+    fun onFavoriteIconPressed(perfumeId: String) {
+        viewModelScope.launch {
+            val isFavorite = _isFavorite.value
+            val result = if (isFavorite) {
+                favoriteRepository.deleteFavorite(perfumeId)
+            } else {
+                favoriteRepository.addFavorite(perfumeId)
+            }
+
+            result.onSuccess {
+                _isFavorite.value = !isFavorite
+            }
         }
     }
 
