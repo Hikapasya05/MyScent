@@ -34,6 +34,13 @@ class PerfumeRepositoryImpl(
 
             val homePerfume = mappedPerfumes.map { (category, perfumes) ->
                 HomePerfume(category, perfumes)
+            }.sortedBy {
+                when (it.categoryName) {
+                    "Men" -> 0
+                    "Women" -> 1
+                    "Unisex" -> 2
+                    else -> 3
+                }
             }
 
             Result.success(homePerfume)
