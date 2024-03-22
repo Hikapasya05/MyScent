@@ -10,7 +10,7 @@ import com.hika.myscent.databinding.ItemPerfumeBinding
 import com.hika.myscent.model.Perfume
 
 class PerfumeAdapter(
-    private val onItemPressed: (Perfume) -> Unit = {}
+    private val onItemPressed: (String) -> Unit = {}
 ): BaseRecyclerViewAdapter<ItemPerfumeBinding, Perfume>() {
     override fun inflateViewBinding(parent: ViewGroup): ItemPerfumeBinding {
         return ItemPerfumeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,7 +29,7 @@ class PerfumeAdapter(
             .into(ivPerfume)
 
         itemView.setOnClickListener {
-            onItemPressed(data)
+            onItemPressed(data.id)
         }
     }
 }
