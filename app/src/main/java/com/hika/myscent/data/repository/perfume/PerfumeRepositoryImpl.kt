@@ -8,13 +8,14 @@ import com.hika.myscent.data.util.FirestoreCollection.USERS
 import com.hika.myscent.data.util.FirestoreField.RATING
 import com.hika.myscent.data.util.toPerfume
 import com.hika.myscent.data.util.toReview
+import com.hika.myscent.model.HomePerfume
 import com.hika.myscent.model.Perfume
 import kotlinx.coroutines.tasks.await
 
 class PerfumeRepositoryImpl(
     private val firestore: FirebaseFirestore
 ): PerfumeRepository {
-    override suspend fun getPerfumes(): Result<Map<String, List<Perfume>>> {
+    override suspend fun getPerfumes(): Result<List<HomePerfume>> {
         return try {
 
             val perfumes = firestore.collection(PERFUMES)
@@ -31,7 +32,11 @@ class PerfumeRepositoryImpl(
 
             val mappedPerfumes = perfumes.groupBy { it.category }
 
-            Result.success(mappedPerfumes)
+            val homePerfume = mappedPerfumes.map { (category, perfumes) ->
+                HomePerfume(category, perfumes)
+            }
+
+            Result.success(homePerfume)
 
         } catch (e: Exception) {
             e.printStackTrace()

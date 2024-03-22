@@ -1,86 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingVertical="32dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="32dp"
+    android:orientation="vertical"
     tools:context=".features.home.HomeFragment">
 
-    <LinearLayout
+    <SearchView
+        android:id="@+id/sv_perfume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <SearchView
-            android:id="@+id/sv_perfume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@id/sv_perfume"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_promotion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingHorizontal="24dp"/>
+    <ProgressBar
+        android:id="@+id/pb_home"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:indeterminateTint="@color/primary_700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_perfume"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_men"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="24dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/men"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_men"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingHorizontal="24dp"
-            android:clipToPadding="false"/>
-
-        <TextView
-            android:id="@+id/tv_women"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="24dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/women"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_women"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingHorizontal="24dp"
-            android:clipToPadding="false"/>
-
-        <TextView
-            android:id="@+id/tv_unisex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="24dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/unisex"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_unisex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:paddingHorizontal="24dp"
-            android:clipToPadding="false"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

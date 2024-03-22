@@ -69,6 +69,10 @@ dependencies {
     //coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
+    //flowbinding
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0")
+
+
     //datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
