@@ -2,30 +2,43 @@ package com.hika.myscent.features.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.hika.myscent.R
+import androidx.lifecycle.lifecycleScope
+import com.hika.myscent.base.BaseActivity
+import com.hika.myscent.databinding.ActivitySplashBinding
 import com.hika.myscent.features.MainActivity
 import com.hika.myscent.features.auth.AuthActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("CustomSplashScreen")
-class SplashActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
-        val firebaseAuth = Firebase.auth
-        val currentUser = firebaseAuth.currentUser
+    private val viewModel by viewModel<SplashViewModel>()
+    override fun inflateViewBinding(): ActivitySplashBinding {
+        return ActivitySplashBinding.inflate(layoutInflater)
+    }
 
-        val intent = if(currentUser != null) {
-            Intent(this, MainActivity::class.java)
-        } else {
-            Intent(this, AuthActivity::class.java)
+    override fun determineScreenOrientation(): ScreenOrientation? {
+        return ScreenOrientation.PORTRAIT
+    }
+
+    override fun ActivitySplashBinding.bind() {
+        viewModel.checkUserLoggedIn()
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.isLoggedIn.collect { isLoggedIn ->
+                if (isLoggedIn == null) return@collect
+
+                val intent = if(isLoggedIn) {
+                    Intent(this@SplashActivity, MainActivity::class.java)
+                } else {
+                    Intent(this@SplashActivity, AuthActivity::class.java)
+                }
+
+                startActivity(intent)
+                finish()
+            }
         }
-
-        startActivity(intent)
-        finish()
     }
 }
