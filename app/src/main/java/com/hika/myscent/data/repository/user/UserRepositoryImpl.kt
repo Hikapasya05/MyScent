@@ -11,6 +11,10 @@ class UserRepositoryImpl(
     private val firestore: FirebaseFirestore,
     private val auth: FirebaseAuth
 ): UserRepository {
+    override suspend fun isUserLoggedIn(): Boolean {
+        return auth.currentUser != null
+    }
+
     override suspend fun getUser(): Result<User> {
         return try {
             firestore.collection(USERS)

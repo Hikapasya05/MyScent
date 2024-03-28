@@ -8,10 +8,12 @@ import com.hika.myscent.features.home.HomeViewModel
 import com.hika.myscent.features.payment.PaymentViewModel
 import com.hika.myscent.features.product.ProductViewModel
 import com.hika.myscent.features.review.ReviewViewModel
+import com.hika.myscent.features.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
+    viewModel { SplashViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { HomeViewModel(get()) }
