@@ -10,6 +10,10 @@ import com.hika.myscent.data.util.toPerfume
 import com.hika.myscent.data.util.toReview
 import com.hika.myscent.model.HomePerfume
 import com.hika.myscent.model.Perfume
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 class PerfumeRepositoryImpl(
@@ -17,33 +21,38 @@ class PerfumeRepositoryImpl(
 ): PerfumeRepository {
     override suspend fun getPerfumes(): Result<List<HomePerfume>> {
         return try {
+            coroutineScope {
+                val perfumesDeferred = async(Dispatchers.IO) {
+                    firestore.collection(PERFUMES).get().await().documents.map {
+                        it.toPerfume()
+                    }
+                }
+                val perfumes = perfumesDeferred.await()
 
-            val perfumes = firestore.collection(PERFUMES)
-                .get().await().documents.map {
-                    val reviewDocuments = it.reference.collection(REVIEWS)
-                        .get().await().documents
-                    val ratings = reviewDocuments.map { it.getField<Int>(RATING) ?: 0 }.average()
+                val perfumesWithReviewsDeferred = perfumes.map {
+                    async {
+                        val ratings = firestore.collection(PERFUMES).document(it.id).collection(REVIEWS)
+                            .get().await().documents.map { it.getField<Int>(RATING) ?: 0 }.average()
 
-                    it.toPerfume(
-                        if (ratings.isNaN()) 0.0
-                        else ratings
-                    )
+                        it.copy(rating = if (ratings.isNaN()) 0.0 else ratings)
+                    }
+                }
+                val perfumeWithReviews = perfumesWithReviewsDeferred.awaitAll()
+
+                val mappedPerfumes = perfumeWithReviews.groupBy { it.category }
+                val homePerfume = mappedPerfumes.map { (category, perfumes) ->
+                    HomePerfume(category, perfumes)
+                }.sortedBy {
+                    when (it.categoryName) {
+                        "Men" -> 0
+                        "Women" -> 1
+                        "Unisex" -> 2
+                        else -> 3
+                    }
                 }
 
-            val mappedPerfumes = perfumes.groupBy { it.category }
-
-            val homePerfume = mappedPerfumes.map { (category, perfumes) ->
-                HomePerfume(category, perfumes)
-            }.sortedBy {
-                when (it.categoryName) {
-                    "Men" -> 0
-                    "Women" -> 1
-                    "Unisex" -> 2
-                    else -> 3
-                }
+                Result.success(homePerfume)
             }
-
-            Result.success(homePerfume)
 
         } catch (e: Exception) {
             e.printStackTrace()

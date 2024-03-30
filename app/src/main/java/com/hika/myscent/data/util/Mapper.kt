@@ -8,7 +8,7 @@ import com.hika.myscent.model.Review
 import com.hika.myscent.model.User
 
 fun DocumentSnapshot.toPerfume(
-    rating: Double
+    rating: Double = 0.0
 ) = Perfume(
     id,
     getString("name").orEmpty(),
