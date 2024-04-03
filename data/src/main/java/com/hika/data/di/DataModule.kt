@@ -1,4 +1,4 @@
-package com.hika.myscent.di
+package com.hika.data.di
 
 import androidx.room.Room
 import com.google.firebase.auth.ktx.auth
