@@ -3,7 +3,7 @@ package com.hika.myscent.features.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.lifecycleScope
-import com.hika.myscent.base.BaseActivity
+import com.hika.common.base.BaseActivity
 import com.hika.myscent.databinding.ActivitySplashBinding
 import com.hika.myscent.features.MainActivity
 import com.hika.myscent.features.auth.AuthActivity

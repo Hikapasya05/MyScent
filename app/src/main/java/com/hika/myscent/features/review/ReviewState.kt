@@ -1,6 +1,6 @@
 package com.hika.myscent.features.review
 
-import com.hika.myscent.base.BaseState
+import com.hika.common.base.BaseState
 
 data class ReviewState(
     override val isLoading: Boolean = false,

@@ -3,11 +3,8 @@ package com.hika.myscent.features.cart
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hika.myscent.data.repository.cart.CartRepository
-import com.hika.myscent.model.Cart
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.hika.data.data.repository.cart.CartRepository
+import com.hika.data.model.Cart
 import kotlinx.coroutines.launch
 
 class CartViewModel(

@@ -1,6 +1,6 @@
 package com.hika.myscent.features.auth.register
 
-import com.hika.myscent.base.BaseState
+import com.hika.common.base.BaseState
 
 data class RegisterState(
     override val isLoading: Boolean = false,

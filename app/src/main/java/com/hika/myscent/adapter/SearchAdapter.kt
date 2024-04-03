@@ -3,14 +3,13 @@ package com.hika.myscent.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
-import androidx.core.view.setMargins
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
-import com.hika.myscent.base.BaseDiffUtil
-import com.hika.myscent.base.BaseRecyclerViewAdapter
-import com.hika.myscent.common.toRupiahFormat
+import com.hika.common.base.BaseDiffUtil
+import com.hika.common.base.BaseRecyclerViewAdapter
+import com.hika.common.common.toRupiahFormat
 import com.hika.myscent.databinding.ItemPerfumeBinding
-import com.hika.myscent.model.Perfume
+import com.hika.data.model.Perfume
 import kotlin.math.roundToInt
 
 class SearchAdapter(

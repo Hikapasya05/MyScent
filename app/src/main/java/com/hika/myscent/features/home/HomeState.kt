@@ -1,8 +1,8 @@
 package com.hika.myscent.features.home
 
-import com.hika.myscent.base.BaseState
-import com.hika.myscent.model.HomePerfume
-import com.hika.myscent.model.Perfume
+import com.hika.common.base.BaseState
+import com.hika.data.model.HomePerfume
+import com.hika.data.model.Perfume
 
 data class HomeState(
     override val isLoading: Boolean =  false,

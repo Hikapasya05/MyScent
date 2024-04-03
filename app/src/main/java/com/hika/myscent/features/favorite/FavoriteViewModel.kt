@@ -2,7 +2,7 @@ package com.hika.myscent.features.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hika.myscent.data.repository.favorite.FavoriteRepository
+import com.hika.data.data.repository.favorite.FavoriteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

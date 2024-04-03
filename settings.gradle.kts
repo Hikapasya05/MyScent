@@ -16,3 +16,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "My Scent"
 include(":app")
+include(":admin")
+include(":common")
+include(":data")

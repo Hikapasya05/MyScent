@@ -2,12 +2,11 @@ package com.hika.myscent.features.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hika.myscent.data.repository.cart.CartRepository
-import com.hika.myscent.data.repository.favorite.FavoriteRepository
-import com.hika.myscent.data.repository.perfume.PerfumeRepository
-import com.hika.myscent.data.repository.review.ReviewRepository
-import com.hika.myscent.model.Cart
-import com.hika.myscent.model.Review
+import com.hika.data.data.repository.cart.CartRepository
+import com.hika.data.data.repository.favorite.FavoriteRepository
+import com.hika.data.data.repository.perfume.PerfumeRepository
+import com.hika.data.data.repository.review.ReviewRepository
+import com.hika.data.model.Review
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

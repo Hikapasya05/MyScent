@@ -2,18 +2,15 @@ package com.hika.myscent.features.home
 
 import android.content.Intent
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.common.base.BaseFragment
+import com.hika.common.common.invisible
+import com.hika.common.common.visible
 import com.hika.myscent.adapter.HomeAdapter
-import com.hika.myscent.adapter.PerfumeAdapter
 import com.hika.myscent.adapter.SearchAdapter
-import com.hika.myscent.base.BaseFragment
-import com.hika.myscent.common.invisible
-import com.hika.myscent.common.visible
 import com.hika.myscent.databinding.FragmentHomeBinding
 import com.hika.myscent.features.product.ProductActivity
-import com.hika.myscent.model.Perfume
 import com.hika.myscent.util.IntentKeys
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce

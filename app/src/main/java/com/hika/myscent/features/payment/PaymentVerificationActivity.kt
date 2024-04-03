@@ -1,9 +1,6 @@
 package com.hika.myscent.features.payment
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.hika.myscent.R
-import com.hika.myscent.base.BaseActivity
+import com.hika.common.base.BaseActivity
 import com.hika.myscent.databinding.ActivityPaymentVerificationBinding
 
 class PaymentVerificationActivity : BaseActivity<ActivityPaymentVerificationBinding>() {

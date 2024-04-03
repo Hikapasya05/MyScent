@@ -3,13 +3,12 @@ package com.hika.myscent.features.product
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.hika.common.base.BaseActivity
+import com.hika.common.common.toRupiahFormat
 import com.hika.myscent.R
 import com.hika.myscent.adapter.ReviewAdapter
-import com.hika.myscent.base.BaseActivity
-import com.hika.myscent.common.toRupiahFormat
 import com.hika.myscent.databinding.ActivityProductBinding
 import com.hika.myscent.features.review.ReviewBottomSheetFragment
-import com.hika.myscent.model.Cart
 import com.hika.myscent.util.IntentKeys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -111,11 +110,11 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
         }
 
         when(strength) {
-            1 -> tvStrongIndicator.text = getString(R.string.indicator_weak)
-            2 -> tvStrongIndicator.text = getString(R.string.indicator_intimate)
-            3 -> tvStrongIndicator.text = getString(R.string.indicator_moderate)
-            4 -> tvStrongIndicator.text = getString(R.string.indicator_strong)
-            5 -> tvStrongIndicator.text = getString(R.string.indicator_very_strong)
+            1 -> tvStrongIndicator.text = getString(com.hika.common.R.string.indicator_weak)
+            2 -> tvStrongIndicator.text = getString(com.hika.common.R.string.indicator_intimate)
+            3 -> tvStrongIndicator.text = getString(com.hika.common.R.string.indicator_moderate)
+            4 -> tvStrongIndicator.text = getString(com.hika.common.R.string.indicator_strong)
+            5 -> tvStrongIndicator.text = getString(com.hika.common.R.string.indicator_very_strong)
         }
     }
 

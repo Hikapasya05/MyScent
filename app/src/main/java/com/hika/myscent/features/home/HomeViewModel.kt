@@ -2,7 +2,7 @@ package com.hika.myscent.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hika.myscent.data.repository.perfume.PerfumeRepository
+import com.hika.data.data.repository.perfume.PerfumeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

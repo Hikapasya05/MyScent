@@ -2,9 +2,9 @@ package com.hika.myscent.features.auth.register
 
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.hika.myscent.base.BaseFragment
+import com.hika.common.base.BaseFragment
+import com.hika.data.model.User
 import com.hika.myscent.databinding.FragmentRegisterBinding
-import com.hika.myscent.model.User
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

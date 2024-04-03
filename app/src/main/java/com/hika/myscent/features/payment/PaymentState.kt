@@ -1,6 +1,6 @@
 package com.hika.myscent.features.payment
 
-import com.hika.myscent.base.BaseState
+import com.hika.common.base.BaseState
 
 data class PaymentState(
     override val isLoading: Boolean = false,

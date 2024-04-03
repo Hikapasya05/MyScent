@@ -1,6 +1,6 @@
 package com.hika.myscent.features.auth.login
 
-import com.hika.myscent.base.BaseState
+import com.hika.common.base.BaseState
 
 data class LoginState(
     override val isLoading: Boolean = false,
