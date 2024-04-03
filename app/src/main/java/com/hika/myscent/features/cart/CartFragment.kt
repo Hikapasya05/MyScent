@@ -3,12 +3,12 @@ package com.hika.myscent.features.cart
 import android.content.Intent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.common.base.BaseFragment
+import com.hika.common.widget.CartSnackbar
 import com.hika.myscent.adapter.CartAdapter
-import com.hika.myscent.base.BaseFragment
 import com.hika.myscent.databinding.FragmentCartBinding
 import com.hika.myscent.features.payment.PaymentActivity
 import com.hika.myscent.util.IntentKeys
-import com.hika.myscent.widget.CartSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {

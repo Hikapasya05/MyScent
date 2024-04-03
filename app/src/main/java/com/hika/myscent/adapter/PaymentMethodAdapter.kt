@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.hika.common.base.BaseRecyclerViewAdapter
+import com.hika.data.model.PaymentMethod
 import com.hika.myscent.R
-import com.hika.myscent.base.BaseRecyclerViewAdapter
 import com.hika.myscent.databinding.ItemListPaymentMethodBinding
-import com.hika.myscent.model.PaymentMethod
 
 class PaymentMethodAdapter(
     private val onPaymentMethodSelected: (PaymentMethod?) -> Unit

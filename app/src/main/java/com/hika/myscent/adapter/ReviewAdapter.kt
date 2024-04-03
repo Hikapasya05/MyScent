@@ -3,11 +3,11 @@ package com.hika.myscent.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.hika.myscent.base.BaseDiffUtil
-import com.hika.myscent.base.BaseRecyclerViewAdapter
+import com.hika.common.base.BaseDiffUtil
+import com.hika.common.base.BaseRecyclerViewAdapter
+import com.hika.common.widget.bind
+import com.hika.data.model.Review
 import com.hika.myscent.databinding.ItemListReviewBinding
-import com.hika.myscent.model.Review
-import com.hika.myscent.widget.bind
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

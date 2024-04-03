@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hika.myscent.base.BaseRecyclerViewAdapter
+import com.hika.common.base.BaseRecyclerViewAdapter
+import com.hika.data.model.HomePerfume
 import com.hika.myscent.databinding.ItemListHomeBinding
-import com.hika.myscent.model.HomePerfume
 
 class HomeAdapter(
     private val onItemPressed: (String) -> Unit = {}

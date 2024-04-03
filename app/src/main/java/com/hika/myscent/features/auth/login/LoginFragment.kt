@@ -4,8 +4,8 @@ import android.content.Intent
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
+import com.hika.common.base.BaseFragment
 import com.hika.myscent.R
-import com.hika.myscent.base.BaseFragment
 import com.hika.myscent.databinding.FragmentLoginBinding
 import com.hika.myscent.features.MainActivity
 import com.hika.myscent.features.auth.register.RegisterFragment

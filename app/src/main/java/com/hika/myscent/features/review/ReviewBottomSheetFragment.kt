@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.hika.common.widget.bind
+import com.hika.common.widget.buildLoadingDialog
 import com.hika.myscent.databinding.FragmentReviewBottomSheetBinding
-import com.hika.myscent.widget.bind
-import com.hika.myscent.widget.buildLoadingDialog
 import com.musfickjamil.snackify.Snackify
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel

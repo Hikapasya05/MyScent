@@ -4,8 +4,8 @@ import android.content.Intent
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.common.base.BaseFragment
 import com.hika.myscent.adapter.FavoriteAdapter
-import com.hika.myscent.base.BaseFragment
 import com.hika.myscent.databinding.FragmentFavoriteBinding
 import com.hika.myscent.features.product.ProductActivity
 import com.hika.myscent.util.IntentKeys

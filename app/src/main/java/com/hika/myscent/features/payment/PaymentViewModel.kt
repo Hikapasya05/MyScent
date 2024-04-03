@@ -4,14 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
+import com.hika.common.util.OrderStatus
+import com.hika.data.data.repository.history.HistoryRepository
+import com.hika.data.data.repository.user.UserRepository
+import com.hika.data.model.PaymentMethod
 import com.hika.myscent.R
-import com.hika.myscent.data.repository.history.HistoryRepository
-import com.hika.myscent.data.repository.user.UserRepository
-import com.hika.myscent.model.Cart
-import com.hika.myscent.model.HistoryBody
-import com.hika.myscent.model.PaymentMethod
-import com.hika.myscent.model.User
-import com.hika.myscent.util.OrderStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -24,10 +21,10 @@ class PaymentViewModel(
     private val _uiState = MutableStateFlow(PaymentState())
     val uiState = _uiState.asStateFlow()
 
-    private val _user = MutableStateFlow<User?>(null)
+    private val _user = MutableStateFlow<com.hika.data.model.User?>(null)
     val user = _user.asStateFlow()
 
-    private val _carts = MutableLiveData<List<Cart>>()
+    private val _carts = MutableLiveData<List<com.hika.data.model.Cart>>()
     val carts = _carts
 
     private val _totalPrice = MutableLiveData<Int>()
@@ -50,7 +47,7 @@ class PaymentViewModel(
         }
     }
 
-    fun setCheckedOutCarts(checkedOutCarts: List<Cart>) {
+    fun setCheckedOutCarts(checkedOutCarts: List<com.hika.data.model.Cart>) {
         _shippingCost.value = listOf(100000, 150000, 200000, 250000).random()
         _admin.value = listOf(10000, 15000, 20000, 25000).random()
         _carts.value = checkedOutCarts
@@ -80,7 +77,7 @@ class PaymentViewModel(
     fun postHistory() {
         viewModelScope.launch {
             _uiState.value = PaymentState(isLoading = true)
-            val body = HistoryBody(
+            val body = com.hika.data.model.HistoryBody(
                 "",
                 Timestamp.now(),
                 _carts.value?.associate { it.productId to it.amount } ?: emptyMap(),
