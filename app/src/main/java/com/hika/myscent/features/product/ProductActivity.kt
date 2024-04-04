@@ -70,7 +70,7 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.isFavorite.collect { isFavorite ->
                 ivFavorite.setImageResource(
-                    if (isFavorite) R.drawable.ic_favorite
+                    if (isFavorite) com.hika.common.R.drawable.ic_favorite
                     else R.drawable.ic_unfavorite
                 )
             }
