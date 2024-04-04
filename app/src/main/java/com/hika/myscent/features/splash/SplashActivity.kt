@@ -3,9 +3,9 @@ package com.hika.myscent.features.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.lifecycleScope
+import com.hika.admin.features.AdminActivity
 import com.hika.common.base.BaseActivity
 import com.hika.myscent.databinding.ActivitySplashBinding
-import com.hika.myscent.features.MainActivity
 import com.hika.myscent.features.auth.AuthActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 if (isLoggedIn == null) return@collect
 
                 val intent = if(isLoggedIn) {
-                    Intent(this@SplashActivity, MainActivity::class.java)
+                    Intent(this@SplashActivity, AdminActivity::class.java)
                 } else {
                     Intent(this@SplashActivity, AuthActivity::class.java)
                 }
