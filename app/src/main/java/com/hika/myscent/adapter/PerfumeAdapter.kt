@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.hika.common.base.BaseRecyclerViewAdapter
 import com.hika.common.common.toRupiahFormat
+import com.hika.common.databinding.ItemPerfumeBinding
 import com.hika.data.model.Perfume
-import com.hika.myscent.databinding.ItemPerfumeBinding
 
 class PerfumeAdapter(
     private val onItemPressed: (String) -> Unit = {}
