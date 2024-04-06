@@ -7,7 +7,9 @@ import com.google.firebase.Timestamp
 import com.hika.common.util.OrderStatus
 import com.hika.data.data.repository.history.HistoryRepository
 import com.hika.data.data.repository.user.UserRepository
+import com.hika.data.model.Cart
 import com.hika.data.model.PaymentMethod
+import com.hika.data.model.User
 import com.hika.myscent.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,10 +23,10 @@ class PaymentViewModel(
     private val _uiState = MutableStateFlow(PaymentState())
     val uiState = _uiState.asStateFlow()
 
-    private val _user = MutableStateFlow<com.hika.data.model.User?>(null)
+    private val _user = MutableStateFlow<User?>(null)
     val user = _user.asStateFlow()
 
-    private val _carts = MutableLiveData<List<com.hika.data.model.Cart>>()
+    private val _carts = MutableLiveData<List<Cart>>()
     val carts = _carts
 
     private val _totalPrice = MutableLiveData<Int>()

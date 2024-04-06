@@ -3,6 +3,7 @@ package com.hika.myscent.features.auth.register
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.hika.common.base.BaseFragment
+import com.hika.data.model.Role
 import com.hika.data.model.User
 import com.hika.myscent.databinding.FragmentRegisterBinding
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             val address = edtAddress.text.toString()
             val password = edtPassword.text.toString()
 
-            val user = User(email, username, address, phone)
+            val user = User(email, username, address, phone, Role.USER.value)
             viewModel.register(user, password)
         }
 

@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.getField
 import com.hika.data.model.Perfume
 import com.hika.data.model.Review
+import com.hika.data.model.User
 
 fun DocumentSnapshot.toPerfume(
     rating: Double = 0.0
@@ -29,9 +30,10 @@ fun DocumentSnapshot.toReview(
     getTimestamp("date") ?: Timestamp.now()
 )
 
-fun DocumentSnapshot.toUser() = com.hika.data.model.User(
+fun DocumentSnapshot.toUser() = User(
     getString("email").orEmpty(),
     getString("username").orEmpty(),
     getString("address").orEmpty(),
-    getString("phoneNumber").orEmpty()
+    getString("phoneNumber").orEmpty(),
+    getString("role").orEmpty()
 )
