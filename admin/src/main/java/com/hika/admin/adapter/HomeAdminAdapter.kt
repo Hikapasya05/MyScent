@@ -1,8 +1,7 @@
-package com.hika.myscent.adapter
+package com.hika.admin.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.hika.common.base.BaseDiffUtil
@@ -12,9 +11,10 @@ import com.hika.common.databinding.ItemPerfumeBinding
 import com.hika.data.model.Perfume
 import kotlin.math.roundToInt
 
-class SearchAdapter(
+class HomeAdminAdapter(
     private val onItemPressed: (Perfume) -> Unit = {}
 ): BaseRecyclerViewAdapter<ItemPerfumeBinding, Perfume>() {
+
     override fun inflateViewBinding(parent: ViewGroup): ItemPerfumeBinding {
         return ItemPerfumeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     }
@@ -29,7 +29,7 @@ class SearchAdapter(
             height = ViewGroup.LayoutParams.WRAP_CONTENT
             val horizontalMargin = (16 * root.context.resources.displayMetrics.density).roundToInt()
             val verticalMargin = (12 * root.context.resources.displayMetrics.density).roundToInt()
-            if (this is MarginLayoutParams) {
+            if (this is ViewGroup.MarginLayoutParams) {
                 setMargins(horizontalMargin, verticalMargin, horizontalMargin, verticalMargin)
             }
         }

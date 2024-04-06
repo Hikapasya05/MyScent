@@ -46,9 +46,26 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //fragment ktx
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    //coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    //flowbinding
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0")
+
+    //koin
+    implementation("io.insert-koin:koin-core:3.5.3")
+    implementation("io.insert-koin:koin-android:3.5.3")
+    implementation("io.insert-koin:koin-androidx-navigation:3.5.3")
 
     implementation(project(":common"))
     implementation(project(":data"))

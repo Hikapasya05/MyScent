@@ -1,6 +1,7 @@
 package com.hika.myscent
 
 import android.app.Application
+import com.hika.admin.di.adminModule
 import com.hika.data.di.databaseModule
 import com.hika.data.di.firebaseModule
 import com.hika.data.di.repositoryModule
@@ -22,7 +23,8 @@ class MyScent: Application() {
                     firebaseModule,
                     databaseModule,
                     repositoryModule,
-                    viewModelModule
+                    viewModelModule,
+                    adminModule
                 )
             )
         }
