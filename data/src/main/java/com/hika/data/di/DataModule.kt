@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.hika.data.data.local.ScentDatabase
 import com.hika.data.data.repository.auth.AuthRepository
 import com.hika.data.data.repository.auth.AuthRepositoryImpl
@@ -25,6 +26,7 @@ import org.koin.dsl.module
 val firebaseModule = module {
     single { Firebase.auth }
     single { Firebase.firestore }
+    single { Firebase.storage }
 }
 
 val databaseModule = module {
@@ -48,6 +50,7 @@ val repositoryModule = module {
     }
     single<PerfumeRepository> {
         PerfumeRepositoryImpl(
+            get(),
             get()
         )
     }

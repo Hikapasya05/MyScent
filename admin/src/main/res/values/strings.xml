@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="strength">Strength</string>
+    <string name="availability">Availability</string>
+</resources>

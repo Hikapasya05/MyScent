@@ -38,4 +38,8 @@
     <string name="total">Total</string>
     <string name="payment_methods">Payment Methods</string>
     <string name="confirm">Confirm</string>
+
+    <string name="title">Title</string>
+    <string name="name">Name</string>
+    <string name="category">Category</string>
 </resources>

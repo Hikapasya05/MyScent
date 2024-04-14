@@ -1,11 +1,15 @@
 package com.hika.admin.features.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hika.admin.adapter.HomeAdminAdapter
 import com.hika.admin.databinding.FragmentHomeAdminBinding
+import com.hika.admin.features.product.AddProductActivity
+import com.hika.admin.features.product.EditProductActivity
+import com.hika.admin.features.product.ProductManagerActivity
 import com.hika.common.base.BaseFragment
 import com.hika.common.common.invisible
 import com.hika.common.common.visible
@@ -19,7 +23,11 @@ class HomeAdminFragment : BaseFragment<FragmentHomeAdminBinding>() {
     private val viewModel by viewModel<HomeAdminViewModel>()
 
     private val homeAdminAdapter by lazy { HomeAdminAdapter(
-        onItemPressed = {  }
+        onItemPressed = {
+            val intent = Intent(context, EditProductActivity::class.java)
+            intent.putExtra(ProductManagerActivity.EXTRA_PERFUME_ID, it.id)
+            startActivity(intent)
+        }
     ) }
 
     override fun inflateViewBinding(container: ViewGroup?): FragmentHomeAdminBinding {
@@ -35,6 +43,11 @@ class HomeAdminFragment : BaseFragment<FragmentHomeAdminBinding>() {
 
         rvHome.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rvHome.adapter = homeAdminAdapter
+
+        fabAddPerfume.setOnClickListener {
+            val intent = Intent(context, AddProductActivity::class.java)
+            startActivity(intent)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             svPerfume.queryTextChanges()
