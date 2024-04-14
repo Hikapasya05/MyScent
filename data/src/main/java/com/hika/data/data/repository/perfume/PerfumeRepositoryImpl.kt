@@ -1,7 +1,9 @@
 package com.hika.data.data.repository.perfume
 
+import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.getField
+import com.google.firebase.storage.FirebaseStorage
 import com.hika.data.data.util.FirestoreCollection.PERFUMES
 import com.hika.data.data.util.FirestoreCollection.REVIEWS
 import com.hika.data.data.util.FirestoreCollection.USERS
@@ -10,6 +12,7 @@ import com.hika.data.data.util.toPerfume
 import com.hika.data.data.util.toReview
 import com.hika.data.model.HomePerfume
 import com.hika.data.model.Perfume
+import com.hika.data.model.PerfumeBody
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -17,8 +20,50 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 class PerfumeRepositoryImpl(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val storage: FirebaseStorage
 ): PerfumeRepository {
+    override suspend fun addPerfume(body: PerfumeBody, uri: Uri): Result<Unit> {
+        return try {
+            val imageRef = storage.reference.child("perfumes/${body.category.lowercase()}/${body.name}")
+            val uploadImageTask = imageRef.putFile(uri).await()
+            val imageUrl = uploadImageTask.storage.downloadUrl.await().toString()
+
+            firestore.collection(PERFUMES).document()
+                .set(body.copy(image = imageUrl))
+                .await()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun updatePerfume(
+        id: String,
+        body: PerfumeBody,
+        uri: Uri?,
+        baseUrl: String
+    ): Result<Unit> {
+return try {
+            val imageUrl = uri?.let {
+                val imageRef = storage.reference.child("perfumes/${body.category.lowercase()}/${body.name}")
+                val uploadImageTask = imageRef.putFile(it).await()
+                uploadImageTask.storage.downloadUrl.await().toString()
+            } ?: baseUrl
+
+            firestore.collection(PERFUMES).document(id)
+                .set(body.copy(image = imageUrl))
+                .await()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
     override suspend fun getPerfumes(): Result<List<HomePerfume>> {
         return try {
             coroutineScope {

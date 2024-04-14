@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        android:theme="@style/Theme.MyScent">
+    <application android:theme="@style/Theme.MyScent">
+        <activity
+            android:name=".features.product.ProductManagerActivity"
+            android:exported="false" />
+        <activity android:name=".features.product.AddProductActivity"
+            android:exported="false" />
+        <activity android:name=".features.product.EditProductActivity"
+            android:exported="false" />
         <activity
             android:name=".features.AdminActivity"
             android:exported="false" />
