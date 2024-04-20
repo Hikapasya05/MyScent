@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.hika.common.base.BaseActivity
 import com.hika.common.common.toRupiahFormat
 import com.hika.data.model.Cart
-import com.hika.myscent.adapter.PaymentMethodAdapter
 import com.hika.myscent.databinding.ActivityPaymentBinding
 import com.hika.myscent.util.IntentKeys.CHECKED_OUT_CARTS
 import kotlinx.coroutines.Dispatchers
@@ -18,14 +16,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PaymentActivity : BaseActivity<ActivityPaymentBinding>() {
 
     private val viewModel by viewModel<PaymentViewModel>()
-
-    private val paymentMethodAdapter by lazy {
-        PaymentMethodAdapter(
-            onPaymentMethodSelected = {
-                viewModel.setPaymentMethod(it)
-            }
-        )
-    }
 
     override fun inflateViewBinding(): ActivityPaymentBinding {
         return ActivityPaymentBinding.inflate(layoutInflater)
@@ -40,11 +30,6 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>() {
 
         val checkedOutCarts: List<Cart> =
             intent.getParcelableArrayListExtra(CHECKED_OUT_CARTS, Cart::class.java)?.toList() ?: emptyList()
-
-        rvPaymentMethod.apply {
-            adapter = paymentMethodAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
 
         btnConfirmPayment.setOnClickListener { viewModel.postHistory() }
 
@@ -81,15 +66,12 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>() {
             tvAdmin.text = it.toString()
         }
 
+        viewModel.uniqueCode.observe(this@PaymentActivity) {
+            tvUniqueCode.text = it.toString()
+        }
+
         viewModel.totalPrice.observe(this@PaymentActivity) {
             tvTotal.text = it.toRupiahFormat()
         }
-
-        viewModel.paymentMethod.observe(this@PaymentActivity) {
-            btnConfirmPayment.isEnabled = it != null
-        }
-
-        paymentMethodAdapter.submitList(viewModel.getPaymentMethods())
-
     }
 }

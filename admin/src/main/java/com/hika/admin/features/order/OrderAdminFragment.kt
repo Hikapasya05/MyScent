@@ -1,32 +1,49 @@
 package com.hika.admin.features.order
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.hika.admin.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hika.admin.adapter.OrderAdminAdapter
+import com.hika.admin.databinding.FragmentOrderAdminBinding
+import com.hika.common.base.BaseFragment
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OrderAdminFragment : Fragment() {
+class OrderAdminFragment : BaseFragment<FragmentOrderAdminBinding>() {
 
-    companion object {
-        fun newInstance() = OrderAdminFragment()
+    private val viewModel by viewModel<OrderAdminViewModel>()
+
+    private val orderAdminAdapter by lazy {
+        OrderAdminAdapter(
+            onPositiveButtonClick = { orderId, status -> viewModel.confirmOrder(orderId, status) },
+            onNegativeButtonClick = { orderId -> viewModel.rejectOrder(orderId) }
+        )
     }
 
-    private lateinit var viewModel: OrderAdminViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_order_admin, container, false)
+    override fun inflateViewBinding(container: ViewGroup?): FragmentOrderAdminBinding {
+        return FragmentOrderAdminBinding.inflate(layoutInflater, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OrderAdminViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun determineScreenOrientation(): ScreenOrientation {
+        return ScreenOrientation.PORTRAIT
+    }
+
+    override fun FragmentOrderAdminBinding.bind() {
+
+        rvOrder.apply {
+            adapter = orderAdminAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        viewModel.getOrders()
+
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                if (it.isLoading) loadingDialog.show() else loadingDialog.dismiss()
+                if (it.isSuccess) orderAdminAdapter.submitList(it.successData)
+                if (it.isError) showErrorSnackBar(it.errorMessage)
+            }
+        }
     }
 
 }

@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -68,5 +68,5 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-navigation:3.5.3")
 
     implementation(project(":common"))
-    implementation(project(":data"))
+    api(project(":data"))
 }
