@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyScent"
         tools:targetApi="31">
         <activity
+            android:name=".features.history.payment.HistoryPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.history.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.payment.PaymentVerificationActivity"
             android:exported="false" />
         <activity

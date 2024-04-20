@@ -1,0 +1,5 @@
+<resources>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="transfer_to">Hika Pasya\n</string>
+    <string name="unique_code">Unique Code</string>
+</resources>

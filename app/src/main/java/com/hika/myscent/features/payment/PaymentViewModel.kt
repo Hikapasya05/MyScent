@@ -8,9 +8,8 @@ import com.hika.common.util.OrderStatus
 import com.hika.data.data.repository.history.HistoryRepository
 import com.hika.data.data.repository.user.UserRepository
 import com.hika.data.model.Cart
-import com.hika.data.model.PaymentMethod
+import com.hika.data.model.HistoryBody
 import com.hika.data.model.User
-import com.hika.myscent.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -38,8 +37,8 @@ class PaymentViewModel(
     private val _admin = MutableLiveData<Int>()
     val admin = _admin
 
-    private val _paymentMethod = MutableLiveData<PaymentMethod?>()
-    val paymentMethod = _paymentMethod
+    private val _uniqueCode = MutableLiveData<Int>()
+    val uniqueCode = _uniqueCode
 
     fun getUser() {
         viewModelScope.launch {
@@ -49,43 +48,28 @@ class PaymentViewModel(
         }
     }
 
-    fun setCheckedOutCarts(checkedOutCarts: List<com.hika.data.model.Cart>) {
+    fun setCheckedOutCarts(checkedOutCarts: List<Cart>) {
         _shippingCost.value = listOf(100000, 150000, 200000, 250000).random()
         _admin.value = listOf(10000, 15000, 20000, 25000).random()
         _carts.value = checkedOutCarts
+        _uniqueCode.value = (1..999).random()
 
-        _totalPrice.value = checkedOutCarts.sumOf { it.price * it.amount } + (_shippingCost.value ?: 0) + (_admin.value ?: 0)
-    }
-
-    fun setPaymentMethod(paymentMethod: PaymentMethod?) {
-        _paymentMethod.value = paymentMethod
+        _totalPrice.value = checkedOutCarts.sumOf { it.price * it.amount } + (_shippingCost.value ?: 0) + (_admin.value ?: 0) + (_uniqueCode.value ?: 0)
     }
 
     fun getTotalPrice(): Int {
         return _carts.value?.sumOf { it.price } ?: 0
     }
 
-    fun getPaymentMethods() = listOf(
-        PaymentMethod(2, "BNI", R.drawable.ic_bni),
-        PaymentMethod(3, "Bank Jago", R.drawable.ic_jago),
-        PaymentMethod(4, "BSI", R.drawable.ic_bsi),
-        PaymentMethod(5, "BCA", R.drawable.ic_bca),
-        PaymentMethod(6, "Bank Mandiri", R.drawable.ic_mandiri),
-        PaymentMethod(7, "Bank Mega", R.drawable.ic_mega),
-        PaymentMethod(8, "BRI", R.drawable.ic_bri),
-        PaymentMethod(9, "BTN", R.drawable.ic_btn),
-    )
-
     fun postHistory() {
         viewModelScope.launch {
             _uiState.value = PaymentState(isLoading = true)
-            val body = com.hika.data.model.HistoryBody(
+            val body = HistoryBody(
                 "",
                 Timestamp.now(),
                 _carts.value?.associate { it.productId to it.amount } ?: emptyMap(),
                 _totalPrice.value ?: 0,
-                _paymentMethod.value?.name.orEmpty(),
-                OrderStatus.PROCESSING.name
+                status = OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION.name,
             )
             historyRepository.postHistory(body).onSuccess {
                 _uiState.value = PaymentState(isLoading = false, isSuccess = true)
