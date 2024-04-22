@@ -27,10 +27,10 @@ class HistoryViewModel(
         }
     }
 
-    fun rejectHistory(historyId: String) {
+    fun rejectHistory(historyId: String, reason: String) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true)
-            historyRepository.updateHistoryStatus(historyId, OrderStatus.REJECTED_BY_USER.name).onSuccess {
+            historyRepository.updateHistoryStatus(historyId, OrderStatus.REJECTED_BY_USER.name, reason).onSuccess {
                 getHistories()
             }.onFailure {
                 _state.value = _state.value.copy(isError = true, errorMessage = it.message.orEmpty())

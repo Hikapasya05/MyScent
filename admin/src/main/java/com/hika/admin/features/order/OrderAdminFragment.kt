@@ -16,7 +16,7 @@ class OrderAdminFragment : BaseFragment<FragmentOrderAdminBinding>() {
     private val orderAdminAdapter by lazy {
         OrderAdminAdapter(
             onPositiveButtonClick = { orderId, status -> viewModel.confirmOrder(orderId, status) },
-            onNegativeButtonClick = { orderId -> viewModel.rejectOrder(orderId) }
+            onNegativeButtonClick = { orderId, reason -> viewModel.rejectOrder(orderId, reason) }
         )
     }
 

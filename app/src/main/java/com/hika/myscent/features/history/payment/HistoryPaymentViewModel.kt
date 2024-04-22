@@ -29,7 +29,7 @@ class HistoryPaymentViewModel(
     fun confirmPayment(historyId: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true)
-            historyRepository.updateHistoryStatus(historyId, OrderStatus.WAIT_FOR_ADMIN_PAYMENT_APPROVAL.name).onSuccess {
+            historyRepository.updateHistoryStatus(historyId, OrderStatus.WAIT_FOR_ADMIN_PAYMENT_APPROVAL.name, null).onSuccess {
                 _state.value = _state.value.copy(isLoading = false, isSuccess = true)
                 onSuccess()
             }.onFailure {

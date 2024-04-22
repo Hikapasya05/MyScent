@@ -47,13 +47,25 @@
             app:layout_constraintTop_toBottomOf="@id/tv_date"
             tools:text="Status: Paid"/>
 
+        <TextView
+            android:id="@+id/tv_additional_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/neutral_700"
+            android:fontFamily="@font/poppins"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_status"
+            tools:text="Additional Information: "/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:nestedScrollingEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/tv_status"
+            app:layout_constraintTop_toBottomOf="@id/tv_additional_information"
             tools:itemCount="5"
             tools:listitem="@layout/item_product_order"/>
 
@@ -124,18 +136,6 @@
                 app:cornerRadius="8dp"/>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_additional_information"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:textColor="@color/neutral_700"
-            android:fontFamily="@font/poppins"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_buttons"
-            tools:text="Additional Information: "/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

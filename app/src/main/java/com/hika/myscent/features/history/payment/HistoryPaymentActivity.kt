@@ -3,6 +3,7 @@ package com.hika.myscent.features.history.payment
 import androidx.lifecycle.lifecycleScope
 import com.hika.common.base.BaseActivity
 import com.hika.common.common.toRupiahFormat
+import com.hika.common.widget.buildOrderHistoryConfirmationDialog
 import com.hika.myscent.databinding.ActivityHistoryPaymentBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,10 +33,15 @@ class HistoryPaymentActivity : BaseActivity<ActivityHistoryPaymentBinding>() {
                     tvDeliveryPointer.text = it.successData?.shippingAddress
                     tvTotalPrice.text = it.successData?.totalPrice?.toRupiahFormat()
                     btnConfirmPayment.setOnClickListener {
-                        viewModel.confirmPayment(historyId) {
-                            showSuccessSnackBar("Payment confirmation sent. Please wait for admin approval")
-                            finish()
-                        }
+                        buildOrderHistoryConfirmationDialog(
+                            "Payment Confirmation",
+                            "Before you confirm, please make sure you have transferred the payment to the account number"
+                        ) {
+                            viewModel.confirmPayment(historyId) {
+                                finish()
+                                showSuccessSnackBar("Payment confirmation sent. Please wait for admin approval")
+                            }
+                        }.show()
                     }
                 }
             }

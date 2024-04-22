@@ -1,14 +1,16 @@
 package com.hika.data.model
 
 import com.google.firebase.Timestamp
+import java.util.Date
 
 data class History(
     val id: String = "",
-    val date: Timestamp = Timestamp.now(),
+    val date: Date = Date(),
     val totalPrice: Int = 0,
     val status: String = "",
     val buyerName: String = "",
     val shippingAddress: String = "",
+    val reason: String? = null,
     val productToAmount: HashMap<String, Long> = hashMapOf(),
     val products: List<PerfumeHistory> = emptyList(),
 )
