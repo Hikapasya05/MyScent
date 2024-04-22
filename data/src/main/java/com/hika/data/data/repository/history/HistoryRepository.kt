@@ -7,5 +7,5 @@ interface HistoryRepository {
     suspend fun postHistory(body: HistoryBody): Result<Unit>
     suspend fun getHistories(): Result<List<History>>
     suspend fun getHistoryById(historyId: String): Result<History>
-    suspend fun updateHistoryStatus(historyId: String, updatedOrderStatus: String): Result<Unit>
+    suspend fun updateHistoryStatus(historyId: String, updatedOrderStatus: String, reason: String?): Result<Unit>
 }

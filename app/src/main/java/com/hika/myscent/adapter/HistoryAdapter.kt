@@ -1,21 +1,25 @@
 package com.hika.myscent.adapter
 
+import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hika.common.base.BaseRecyclerViewAdapter
 import com.hika.common.common.gone
+import com.hika.common.common.toOrderHistoryFormat
 import com.hika.common.common.toRupiahFormat
+import com.hika.common.common.visible
 import com.hika.common.databinding.ItemHistoryBinding
 import com.hika.common.databinding.ItemProductOrderBinding
 import com.hika.common.util.OrderStatus
+import com.hika.common.widget.buildOrderHistoryConfirmationDialog
 import com.hika.data.model.History
 import com.hika.data.model.PerfumeHistory
 
 class HistoryAdapter(
     private val onPositiveButtonClick: (String, String) -> Unit = { _, _ -> },
-    private val onNegativeButtonClick: (String) -> Unit = { }
+    private val onNegativeButtonClick: Dialog.(String, String) -> Unit = {_, _ ->  }
 ): BaseRecyclerViewAdapter<ItemHistoryBinding, History>() {
     override fun inflateViewBinding(parent: ViewGroup): ItemHistoryBinding {
         return ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,7 +30,7 @@ class HistoryAdapter(
 
     override fun ItemHistoryBinding.binds(data: History) {
         tvBuyer.text = "Your Order"
-        tvDate.text = data.date.toString()
+        tvDate.text = data.date.toOrderHistoryFormat()
 
         val productOrderAdapter = ProductHistoryAdapter()
         rvOrder.apply {
@@ -39,7 +43,7 @@ class HistoryAdapter(
         tvShippingAddressValue.text = data.shippingAddress
 
         btnPositive.text = "Confirm"
-        btnNegative.text = "Reject"
+        btnNegative.text = "Cancel"
 
         when(data.status) {
             OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION.name -> {
@@ -78,7 +82,18 @@ class HistoryAdapter(
         }
 
         btnNegative.setOnClickListener {
-            onNegativeButtonClick(data.id)
+            root.context.buildOrderHistoryConfirmationDialog(
+                title = "Cancel Order",
+                message = "Please enter the reason for cancellation",
+                showTextField = true,
+            ) {
+                this.onNegativeButtonClick(data.id, it)
+            }.show()
+        }
+
+        if (data.reason != null) {
+            tvAdditionalInformation.text = "Reason: ${data.reason}"
+            tvAdditionalInformation.visible()
         }
     }
 }

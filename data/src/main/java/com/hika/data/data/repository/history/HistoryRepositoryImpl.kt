@@ -101,12 +101,21 @@ class HistoryRepositoryImpl(
 
     override suspend fun updateHistoryStatus(
         historyId: String,
-        updatedOrderStatus: String
+        updatedOrderStatus: String,
+        reason: String?
     ): Result<Unit> {
         return try {
             firestore.collection(HISTORIES)
                 .document(historyId)
-                .update("status", updatedOrderStatus)
+                .update(
+                    if (reason == null)
+                        mapOf("status" to updatedOrderStatus)
+                    else
+                        mapOf(
+                            "status" to updatedOrderStatus,
+                            "reason" to reason
+                        )
+                )
                 .await()
 
             Result.success(Unit)

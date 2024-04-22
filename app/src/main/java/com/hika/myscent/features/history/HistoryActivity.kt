@@ -20,9 +20,9 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>() {
             intent.putExtra(HistoryPaymentActivity.HISTORY_ID, historyId)
             startActivity(intent)
         },
-        onNegativeButtonClick = { historyId ->
-            // Do something
-            viewModel.rejectHistory(historyId)
+        onNegativeButtonClick = { historyId, reason ->
+            viewModel.rejectHistory(historyId, reason)
+            dismiss()
         }
     )}
 

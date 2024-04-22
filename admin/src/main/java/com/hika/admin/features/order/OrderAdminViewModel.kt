@@ -35,7 +35,7 @@ class OrderAdminViewModel(
             else -> OrderStatus.REJECTED_BY_ADMIN
         }
         viewModelScope.launch {
-            orderRepository.updateHistoryStatus(orderId, updatedOrderStatus.name).onSuccess {
+            orderRepository.updateHistoryStatus(orderId, updatedOrderStatus.name, null).onSuccess {
                 getOrders()
             }.onFailure {
                 _state.value = _state.value.copy(isError = true, errorMessage = it.message.orEmpty())
@@ -44,10 +44,10 @@ class OrderAdminViewModel(
         }
     }
 
-    fun rejectOrder(orderId: String) {
+    fun rejectOrder(orderId: String, reason: String) {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            orderRepository.updateHistoryStatus(orderId, OrderStatus.REJECTED_BY_ADMIN.name).onSuccess {
+            orderRepository.updateHistoryStatus(orderId, OrderStatus.REJECTED_BY_ADMIN.name, reason).onSuccess {
                 getOrders()
             }.onFailure {
                 _state.value = _state.value.copy(isError = true, errorMessage = it.message.orEmpty())

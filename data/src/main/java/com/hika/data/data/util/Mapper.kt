@@ -44,11 +44,12 @@ fun DocumentSnapshot.toHistory(
     perfumeHistories: List<PerfumeHistory> = emptyList()
 ) = History(
     id,
-    getTimestamp("date") ?: Timestamp.now(),
+    getTimestamp("date")?.toDate() ?: Timestamp.now().toDate(),
     getField<Int>("totalPrice") ?: 0,
     getString("status").orEmpty(),
     getString("buyerName").orEmpty(),
     getString("shippingAddress").orEmpty(),
+    getString("reason"),
     get("productToAmount") as? HashMap<String, Long> ?: hashMapOf(),
     perfumeHistories
 )
