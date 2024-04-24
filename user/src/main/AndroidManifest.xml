@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:theme="@style/Base.Theme.MyScent">
+
+        <activity
+            android:name=".features.history.payment.HistoryPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.history.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.payment.PaymentVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.product.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.MainActivity"
+            android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+    </application>
+
+</manifest>

@@ -67,6 +67,6 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.5.3")
     implementation("io.insert-koin:koin-androidx-navigation:3.5.3")
 
-    implementation(project(":common"))
+    api(project(":common"))
     api(project(":data"))
 }
