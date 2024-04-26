@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.hika.common.util.Navigation
 import com.hika.common.widget.buildLoadingDialog
 import com.musfickjamil.snackify.Snackify
 

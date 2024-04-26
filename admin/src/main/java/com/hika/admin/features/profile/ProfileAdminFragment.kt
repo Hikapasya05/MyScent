@@ -1,32 +1,41 @@
 package com.hika.admin.features.profile
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.hika.admin.R
+import androidx.lifecycle.lifecycleScope
+import com.hika.admin.databinding.FragmentProfileAdminBinding
+import com.hika.admin.navigation.AdminNavigation
+import com.hika.common.base.BaseFragment
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileAdminFragment : Fragment() {
+class ProfileAdminFragment : BaseFragment<FragmentProfileAdminBinding>() {
 
-    companion object {
-        fun newInstance() = ProfileAdminFragment()
+    private val viewModel by viewModel<ProfileAdminViewModel>()
+
+    private val adminNavigation by inject<AdminNavigation>()
+
+    override fun inflateViewBinding(container: ViewGroup?): FragmentProfileAdminBinding {
+        return FragmentProfileAdminBinding.inflate(layoutInflater, container, false)
     }
 
-    private lateinit var viewModel: ProfileAdminViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile_admin, container, false)
+    override fun determineScreenOrientation(): ScreenOrientation? {
+        return ScreenOrientation.PORTRAIT
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileAdminViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+    override fun FragmentProfileAdminBinding.bind() {
+        viewModel.getUser()
 
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                if (it.isLoading) loadingDialog.show() else loadingDialog.dismiss()
+                if (it.isSuccess) tvUsername.text = it.successData?.username
+                if (it.isError) showErrorSnackBar(it.errorMessage)
+            }
+        }
+
+        btnLogout.setOnClickListener {
+            adminNavigation.navigateToAuth(requireActivity())
+        }
+    }
 }
