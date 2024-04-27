@@ -68,7 +68,7 @@ return try {
         return try {
             coroutineScope {
                 val perfumesDeferred = async(Dispatchers.IO) {
-                    firestore.collection(PERFUMES).get().await().documents.map {
+                    firestore.collection(PERFUMES).whereEqualTo("isAvailable", true).get().await().documents.map {
                         it.toPerfume()
                     }
                 }
