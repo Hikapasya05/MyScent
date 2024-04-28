@@ -72,4 +72,9 @@ class HomeAdminFragment : BaseFragment<FragmentHomeAdminBinding>() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPerfumes()
+    }
 }

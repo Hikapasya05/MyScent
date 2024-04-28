@@ -170,5 +170,15 @@
             android:text="@string/submit"/>
 
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:text="@string/delete"
+            android:backgroundTint="@color/error_500"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

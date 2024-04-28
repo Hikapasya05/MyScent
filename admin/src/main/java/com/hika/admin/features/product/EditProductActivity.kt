@@ -16,4 +16,8 @@ class EditProductActivity: ProductManagerActivity() {
             binding.actvAvailability.text.toString()
         )
     }
+
+    override fun showDeleteButton(): Boolean {
+        return true
+    }
 }

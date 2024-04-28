@@ -136,4 +136,14 @@ return try {
             Result.failure(e)
         }
     }
+
+    override suspend fun deletePerfume(id: String): Result<Unit> {
+        return try {
+            firestore.collection(PERFUMES).document(id).delete().await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
 }
