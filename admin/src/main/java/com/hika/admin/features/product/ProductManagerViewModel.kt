@@ -123,4 +123,17 @@ class ProductManagerViewModel(
         }
     }
 
+    fun deleteProduct(
+        id: String
+    ) {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(isLoading = true)
+            repository.deletePerfume(id).onSuccess {
+                _state.value = _state.value.copy(isLoading = false, isSuccess = true)
+            }.onFailure {
+                _state.value = _state.value.copy(isLoading = false, isSuccess = false)
+            }
+        }
+    }
+
 }

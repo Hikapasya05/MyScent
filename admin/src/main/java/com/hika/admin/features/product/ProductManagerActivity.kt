@@ -31,8 +31,10 @@ open class ProductManagerActivity : BaseActivity<ActivityProductManagerBinding>(
 
     override fun ActivityProductManagerBinding.bind() {
 
+        val perfumeId = intent.getStringExtra(EXTRA_PERFUME_ID).orEmpty()
+
+        if (showDeleteButton()) btnDelete.visible() else btnDelete.gone()
         if (fillExistingProduct()) {
-            val perfumeId = intent.getStringExtra(EXTRA_PERFUME_ID) ?: return
             viewModel.getPerfume(perfumeId)
         } else {
             viewModel.pairDropDowns()
@@ -44,6 +46,10 @@ open class ProductManagerActivity : BaseActivity<ActivityProductManagerBinding>(
 
         btnSubmit.setOnClickListener {
             onButtonSubmitClicked()
+        }
+
+        btnDelete.setOnClickListener {
+            viewModel.deleteProduct(perfumeId)
         }
 
         lifecycleScope.launch {
@@ -123,6 +129,10 @@ open class ProductManagerActivity : BaseActivity<ActivityProductManagerBinding>(
     }
 
     open fun onButtonSubmitClicked() {}
+
+    open fun showDeleteButton(): Boolean {
+        return false
+    }
 
     companion object {
         const val EXTRA_PERFUME_ID = "extra_perfume_id"

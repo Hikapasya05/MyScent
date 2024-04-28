@@ -1,5 +1,6 @@
 package com.hika.data.data.repository.history
 
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hika.data.data.local.ScentDao
@@ -31,7 +32,12 @@ class HistoryRepositoryImpl(
 
             firestore.collection(HISTORIES)
                 .document()
-                .set(body.copy(uid = auth.uid.orEmpty(), buyerName = userIdentity.username, shippingAddress = userIdentity.address))
+                .set(body.copy(
+                    uid = auth.uid.orEmpty(),
+                    date = Timestamp.now().toDate(),
+                    buyerName = userIdentity.username,
+                    shippingAddress = userIdentity.address
+                ))
                 .await()
 
             body.productToAmount.forEach { (productId, _) ->

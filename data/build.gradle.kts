@@ -46,10 +46,10 @@ dependencies {
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    api("com.google.firebase:firebase-analytics")
-    api("com.google.firebase:firebase-auth-ktx")
-    api("com.google.firebase:firebase-firestore-ktx")
-    api("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
 
     //coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

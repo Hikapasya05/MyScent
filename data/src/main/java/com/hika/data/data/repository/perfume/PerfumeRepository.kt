@@ -10,4 +10,5 @@ interface PerfumeRepository {
     suspend fun updatePerfume(id: String, body: PerfumeBody, uri: Uri?, baseUrl: String): Result<Unit>
     suspend fun getPerfumes(): Result<List<HomePerfume>>
     suspend fun getPerfumeDetail(id: String): Result<Perfume>
+    suspend fun deletePerfume(id: String): Result<Unit>
 }

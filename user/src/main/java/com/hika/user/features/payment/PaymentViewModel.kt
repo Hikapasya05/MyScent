@@ -3,7 +3,6 @@ package com.hika.user.features.payment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.Timestamp
 import com.hika.common.util.OrderStatus
 import com.hika.data.data.repository.history.HistoryRepository
 import com.hika.data.data.repository.user.UserRepository
@@ -65,10 +64,8 @@ class PaymentViewModel(
         viewModelScope.launch {
             _uiState.value = PaymentState(isLoading = true)
             val body = HistoryBody(
-                "",
-                Timestamp.now(),
-                _carts.value?.associate { it.productId to it.amount } ?: emptyMap(),
-                _totalPrice.value ?: 0,
+                productToAmount = _carts.value?.associate { it.productId to it.amount } ?: emptyMap(),
+                totalPrice = _totalPrice.value ?: 0,
                 status = OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION.name,
             )
             historyRepository.postHistory(body).onSuccess {
