@@ -9,6 +9,7 @@ data class Perfume(
     val strength: Int = 0,
     val price: Int = 0,
     val rating: Double = 0.0,
+    @field:JvmField
     val isAvailable: Boolean = false
 )
 
@@ -19,5 +20,6 @@ data class PerfumeBody(
     val description: String = "",
     val strength: Int = 0,
     val price: Int = 0,
+    @field:JvmField
     val isAvailable: Boolean = false
 )
