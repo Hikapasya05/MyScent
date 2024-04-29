@@ -1,6 +1,7 @@
 package com.hika.data.data.repository.perfume
 
 import android.net.Uri
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.getField
 import com.google.firebase.storage.FirebaseStorage
@@ -13,7 +14,7 @@ import com.hika.data.data.util.toReview
 import com.hika.data.model.HomePerfume
 import com.hika.data.model.Perfume
 import com.hika.data.model.PerfumeBody
-import kotlinx.coroutines.Dispatchers
+import com.hika.data.model.Role
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -21,7 +22,8 @@ import kotlinx.coroutines.tasks.await
 
 class PerfumeRepositoryImpl(
     private val firestore: FirebaseFirestore,
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    private val auth: FirebaseAuth
 ): PerfumeRepository {
     override suspend fun addPerfume(body: PerfumeBody, uri: Uri): Result<Unit> {
         return try {
@@ -67,12 +69,22 @@ return try {
     override suspend fun getPerfumes(): Result<List<HomePerfume>> {
         return try {
             coroutineScope {
-                val perfumesDeferred = async(Dispatchers.IO) {
+                val userRole = firestore.collection(USERS)
+                    .document(auth.uid.orEmpty())
+                    .get()
+                    .await()
+                    .getString("role")
+
+                val perfumes = if (userRole == Role.USER.value) {
                     firestore.collection(PERFUMES).whereEqualTo("isAvailable", true).get().await().documents.map {
                         it.toPerfume()
                     }
                 }
-                val perfumes = perfumesDeferred.await()
+                else {
+                    firestore.collection(PERFUMES).get().await().documents.map {
+                        it.toPerfume()
+                    }
+                }
 
                 val perfumesWithReviewsDeferred = perfumes.map {
                     async {

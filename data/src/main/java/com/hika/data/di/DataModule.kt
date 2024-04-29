@@ -51,6 +51,7 @@ val repositoryModule = module {
     single<PerfumeRepository> {
         PerfumeRepositoryImpl(
             get(),
+            get(),
             get()
         )
     }

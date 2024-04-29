@@ -19,6 +19,7 @@ fun DocumentSnapshot.toPerfume(
     getString("description").orEmpty(),
     getField<Int>("strength") ?: 0,
     getField<Int>("price") ?: 0,
+    isAvailable = getBoolean("isAvailable") ?: false,
     rating = rating
 )
 
