@@ -56,7 +56,7 @@ class ProductManagerViewModel(
     }
 
     fun toAvailabilityString(isAvailable: Boolean): String {
-        return _availabilitiesRaw.first { it == if (isAvailable) "Available" else "Not Available" }
+        return if (isAvailable) _availabilitiesRaw.first() else _availabilitiesRaw.last()
     }
 
     fun getPerfume(id: String) {
