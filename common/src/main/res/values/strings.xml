@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Scent</string>
+    <string name="app_name">My Scent App</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="email">Email</string>
