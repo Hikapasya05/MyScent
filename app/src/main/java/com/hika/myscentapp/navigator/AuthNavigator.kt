@@ -1,4 +1,4 @@
-package com.hika.myscent.navigator
+package com.hika.myscentapp.navigator
 
 import com.hika.auth.navigation.AuthNavigation
 

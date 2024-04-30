@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Scent"
+rootProject.name = "My Scent App"
 include(":app")
 include(":admin")
 include(":common")

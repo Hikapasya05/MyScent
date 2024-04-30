@@ -1,13 +1,12 @@
-package com.hika.myscent.navigator
+package com.hika.myscentapp.navigator
 
 import android.app.Activity
+import com.hika.admin.navigation.AdminNavigation
 import com.hika.auth.navigation.AuthNavigation
-import com.hika.user.navigation.UserNavigation
 
-class UserNavigator(
+class AdminNavigator(
     private val authNavigation: AuthNavigation
-): UserNavigation() {
-
+): AdminNavigation() {
     override fun navigateToAuth(activity: Activity) {
         authNavigation.navigateToAuth(activity)
     }
