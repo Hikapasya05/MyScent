@@ -21,7 +21,7 @@ class LoginViewModel(
             _loginState.value = LoginState(isLoading = true)
             authRepository.login(email, password).let { result ->
                 if (result.isSuccess) {
-                    _loginState.value = LoginState(isSuccess = true, successData = Unit)
+                    _loginState.value = LoginState(isSuccess = true, successData = result.getOrNull())
                 } else {
                     _loginState.value = LoginState(isError = true, errorMessage = result.exceptionOrNull()?.message.orEmpty())
                 }

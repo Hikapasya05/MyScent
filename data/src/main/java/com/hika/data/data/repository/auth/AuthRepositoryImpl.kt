@@ -3,16 +3,27 @@ package com.hika.data.data.repository.auth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hika.data.data.util.FirestoreCollection
+import com.hika.data.model.Role
 import kotlinx.coroutines.tasks.await
 
 class AuthRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ): AuthRepository {
-    override suspend fun login(email: String, password: String): Result<Unit> {
+    override suspend fun login(email: String, password: String): Result<Role> {
         return try {
-            auth.signInWithEmailAndPassword(email, password).await()
-            Result.success(Unit)
+            val userInformation = auth.signInWithEmailAndPassword(email, password).await()
+            val userRole = firestore.collection(FirestoreCollection.USERS)
+                .document(userInformation.user?.uid.toString())
+                .get()
+                .await()
+                .getString("role")
+
+            if (userRole == Role.ADMIN.value) {
+                Result.success(Role.ADMIN)
+            } else {
+                Result.success(Role.USER)
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }
