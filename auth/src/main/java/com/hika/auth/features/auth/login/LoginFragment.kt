@@ -4,10 +4,12 @@ import android.content.Intent
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
+import com.hika.admin.features.AdminActivity
 import com.hika.auth.R
 import com.hika.auth.databinding.FragmentLoginBinding
 import com.hika.auth.features.auth.register.RegisterFragment
 import com.hika.common.base.BaseFragment
+import com.hika.data.model.Role
 import com.hika.user.features.MainActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,7 +45,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 state?.let {
                     if (it.isLoading) loadingDialog.show() else loadingDialog.hide()
                     if (it.isSuccess) {
-                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        val intent = if (it.successData == Role.ADMIN) {
+                            Intent(requireContext(), AdminActivity::class.java)
+                        } else {
+                            Intent(requireContext(), MainActivity::class.java)
+                        }
+
                         startActivity(intent)
                         requireActivity().finish()
                     }
