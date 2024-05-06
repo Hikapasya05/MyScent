@@ -9,6 +9,7 @@ import com.hika.user.features.payment.PaymentViewModel
 import com.hika.user.features.product.ProductViewModel
 import com.hika.user.features.profile.ProfileViewModel
 import com.hika.user.features.review.ReviewViewModel
+import com.hika.user.features.update_profile.UpdateProfileViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,4 +23,5 @@ val userModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { HistoryPaymentViewModel(get()) }
+    viewModel { UpdateProfileViewModel(get()) }
 }

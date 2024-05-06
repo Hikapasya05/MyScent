@@ -22,7 +22,7 @@ class ProfileViewModel(
 
     init {
         _settings.value = listOf(
-            ProfileSettings(ProfileSetting.UPDATE_PROFILE, "Change Profile", R.drawable.ic_profile_update_profile),
+            ProfileSettings(ProfileSetting.UPDATE_PROFILE, "Update Profile", R.drawable.ic_profile_update_profile),
             ProfileSettings(ProfileSetting.ORDER_HISTORY, "Order History", R.drawable.ic_profile_history)
         )
     }

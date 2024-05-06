@@ -7,4 +7,5 @@ interface UserRepository {
 
     suspend fun getAuthorizedUser(): AuthorizeStatus
     suspend fun getUser(): Result<User>
+    suspend fun updateUser(user: User): Result<Unit>
 }

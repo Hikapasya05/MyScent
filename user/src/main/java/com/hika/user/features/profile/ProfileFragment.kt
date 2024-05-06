@@ -8,6 +8,7 @@ import com.hika.common.base.BaseFragment
 import com.hika.user.adapter.ProfileSettingsAdapter
 import com.hika.user.databinding.FragmentProfileBinding
 import com.hika.user.features.history.HistoryActivity
+import com.hika.user.features.update_profile.UpdateProfileActivity
 import com.hika.user.navigation.UserNavigation
 import com.hika.user.util.ProfileSetting
 import kotlinx.coroutines.launch
@@ -20,7 +21,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         ProfileSettingsAdapter { setting ->
             when(setting) {
                 ProfileSetting.UPDATE_PROFILE -> {
-                    // navigate to update profile
+                    val intent = Intent(requireContext(), UpdateProfileActivity::class.java)
+                    startActivity(intent)
                 }
                 ProfileSetting.ORDER_HISTORY -> {
                     val intent = Intent(requireContext(), HistoryActivity::class.java)
