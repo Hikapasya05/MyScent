@@ -1,8 +1,10 @@
 package com.hika.data.data.repository.history
 
+import android.graphics.Bitmap
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.hika.data.data.local.ScentDao
 import com.hika.data.data.util.FirestoreCollection.HISTORIES
 import com.hika.data.data.util.FirestoreCollection.PERFUMES
@@ -17,9 +19,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 
 class HistoryRepositoryImpl(
     private val firestore: FirebaseFirestore,
+    private val storage: FirebaseStorage,
     private val auth: FirebaseAuth,
     private val dao: ScentDao,
 ): HistoryRepository {
@@ -108,19 +112,32 @@ class HistoryRepositoryImpl(
     override suspend fun updateHistoryStatus(
         historyId: String,
         updatedOrderStatus: String,
-        reason: String?
+        reason: String?,
+        photo: Bitmap?
     ): Result<Unit> {
         return try {
+            val imageRef = storage.reference.child("order/${historyId}")
+            val imageUrl = photo?.let {
+                val outputStream = ByteArrayOutputStream()
+                photo.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                val data = outputStream.toByteArray()
+                val uploadImageTask = imageRef.putBytes(data).await()
+                uploadImageTask.storage.downloadUrl.await().toString()
+            } ?: throw IllegalArgumentException("Photo is required")
+
             firestore.collection(HISTORIES)
                 .document(historyId)
                 .update(
-                    if (reason == null)
-                        mapOf("status" to updatedOrderStatus)
-                    else
+                    if (reason != null)
                         mapOf(
                             "status" to updatedOrderStatus,
-                            "reason" to reason
+                            "reason" to reason,
                         )
+                    else mapOf(
+                        "status" to updatedOrderStatus,
+                        "paymentReceipt" to imageUrl
+                    )
+
                 )
                 .await()
 

@@ -50,4 +50,6 @@
     <string name="shipping_address">Shipping Address:  </string>
     <string name="write_your_reason_here">Write your reason here</string>
     <string name="delete">Delete</string>
+    <string name="payment_receipt">Payment Receipt</string>
+    <string name="show">Show</string>
 </resources>
