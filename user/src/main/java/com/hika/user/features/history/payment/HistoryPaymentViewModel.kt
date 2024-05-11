@@ -1,5 +1,6 @@
 package com.hika.user.features.history.payment
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hika.common.util.OrderStatus
@@ -15,6 +16,10 @@ class HistoryPaymentViewModel(
     private val _state = MutableStateFlow(HistoryPaymentState())
     val state = _state.asStateFlow()
 
+    private val _photo = MutableStateFlow<Bitmap?>(null)
+    val photo = _photo.asStateFlow()
+
+
     fun getHistoryById(historyId: String) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true)
@@ -29,12 +34,16 @@ class HistoryPaymentViewModel(
     fun confirmPayment(historyId: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true)
-            historyRepository.updateHistoryStatus(historyId, OrderStatus.WAIT_FOR_ADMIN_PAYMENT_APPROVAL.name, null).onSuccess {
+            historyRepository.updateHistoryStatus(historyId, OrderStatus.WAIT_FOR_ADMIN_PAYMENT_APPROVAL.name, null, _photo.value).onSuccess {
                 _state.value = _state.value.copy(isLoading = false, isSuccess = true)
                 onSuccess()
             }.onFailure {
                 _state.value = _state.value.copy(isLoading = false, isError = true, errorMessage = "Failed to confirm payment")
             }
         }
+    }
+
+    fun addPhoto(photo: Bitmap) {
+        _photo.value = photo
     }
 }

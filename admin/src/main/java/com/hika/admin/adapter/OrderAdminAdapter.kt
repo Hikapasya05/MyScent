@@ -14,6 +14,7 @@ import com.hika.common.common.visible
 import com.hika.common.databinding.ItemHistoryBinding
 import com.hika.common.databinding.ItemProductOrderBinding
 import com.hika.common.util.OrderStatus
+import com.hika.common.widget.buildFullSizeImageDialog
 import com.hika.common.widget.buildOrderHistoryConfirmationDialog
 import com.hika.data.model.History
 import com.hika.data.model.PerfumeHistory
@@ -95,6 +96,15 @@ class OrderAdminAdapter(
         if (data.reason != null) {
             tvAdditionalInformation.text = "Reason: ${data.reason}"
             tvAdditionalInformation.visible()
+        }
+
+        if (data.paymentReceipt != null) {
+            tvPaymentReceipt.visible()
+            btnViewPaymentReceipt.visible()
+
+            btnViewPaymentReceipt.setOnClickListener {
+                root.context.buildFullSizeImageDialog(data.paymentReceipt).show()
+            }
         }
     }
 
