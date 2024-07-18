@@ -3,4 +3,6 @@
     <string name="transfer_to">Hika Pasya Mustofa\n4131460398 (Permata Bank Indonesia)</string>
     <string name="unique_code">Unique Code</string>
     <string name="update">Update</string>
+    <string name="transfer_slip">Transfer Slip</string>
+    <string name="payment_receipt">Payment Receipt</string>
 </resources>

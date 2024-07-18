@@ -77,6 +77,7 @@ val repositoryModule = module {
         HistoryRepositoryImpl(
             get(),
             get(),
+            get(),
             get()
         )
     }

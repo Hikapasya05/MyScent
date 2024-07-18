@@ -51,6 +51,7 @@ fun DocumentSnapshot.toHistory(
     getString("buyerName").orEmpty(),
     getString("shippingAddress").orEmpty(),
     getString("reason"),
+    getString("paymentReceipt"),
     get("productToAmount") as? HashMap<String, Long> ?: hashMapOf(),
     perfumeHistories
 )

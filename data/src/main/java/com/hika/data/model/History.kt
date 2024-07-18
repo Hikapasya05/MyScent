@@ -10,6 +10,7 @@ data class History(
     val buyerName: String = "",
     val shippingAddress: String = "",
     val reason: String? = null,
+    val paymentReceipt: String? = null,
     val productToAmount: HashMap<String, Long> = hashMapOf(),
     val products: List<PerfumeHistory> = emptyList(),
 )
