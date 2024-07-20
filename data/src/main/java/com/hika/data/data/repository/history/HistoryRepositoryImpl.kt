@@ -123,7 +123,9 @@ class HistoryRepositoryImpl(
                 val data = outputStream.toByteArray()
                 val uploadImageTask = imageRef.putBytes(data).await()
                 uploadImageTask.storage.downloadUrl.await().toString()
-            } ?: throw IllegalArgumentException("Photo is required")
+            } ?: if (updatedOrderStatus == "WAIT_FOR_ADMIN_PAYMENT_APPROVAL") {
+                throw IllegalArgumentException("Photo is required")
+            } else null
 
             firestore.collection(HISTORIES)
                 .document(historyId)
